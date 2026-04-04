@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mert Live Perp Scanner</title>
+  <style>
+    :root{
+      --bg:#0b1020; --panel:#121934; --panel2:#0f1530; --text:#eef2ff; --muted:#9aa4c7;
+      --green:#1f9d55; --red:#d64545; --amber:#d99a1a; --line:#263052;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:linear-gradient(180deg,#0b1020,#0a0f1d);color:var(--text)}
+    .wrap{max-width:1100px;margin:0 auto;padding:16px}
+    .top{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+    .title{font-size:22px;font-weight:700}
+    .sub{color:var(--muted);font-size:13px}
+    .controls{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 18px}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px}
+    .control{display:flex;flex-direction:column;gap:6px;min-width:130px}
+    label{font-size:12px;color:var(--muted)}
+    input,select,button{border-radius:10px;border:1px solid var(--line);background:var(--panel2);color:var(--text);padding:10px 12px;font-size:14px}
+    button{background:#274690;border:none;font-weight:600}
+    button:hover{filter:brightness(1.08);cursor:pointer}
+    .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px}
+    .stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px}
+    .stat .k{font-size:12px;color:var(--muted)}
+    .stat .v{font-size:24px;font-weight:700;margin-top:4px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .tbl{width:100%;border-collapse:collapse;font-size:14px}
+    .tbl th,.tbl td{padding:10px;border-bottom:1px solid var(--line);text-align:left}
+    .tbl th{color:var(--muted);font-weight:600;position:sticky;top:0;background:var(--panel)}
+    .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+    .panel h3{margin:0;padding:12px 14px;border-bottom:1px solid var(--line);font-size:16px}
+    .sig{font-weight:700;padding:4px 8px;border-radius:999px;display:inline-block;font-size:12px}
+    .AL{background:rgba(31,157,85,.18);color:#78f0a8}
+    .SAT{background:rgba(214,69,69,.18);color:#ff9b9b}
+    .muted{color:var(--muted)}
+    .footer{margin-top:10px;color:var(--muted);font-size:12px}
+    .ok{color:#78f0a8}
+    .warn{color:#ffd079}
+    .small{font-size:12px}
+    @media (max-width: 860px){
+      .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .grid{grid-template-columns:1fr}
+      .title{font-size:20px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div>
+        <div class="title">Mert Live Perp Scanner</div>
+        <div class="sub">Binance USDT perpetual coinleri tarar. iPad Safari uyumlu tek dosya sürüm.</div>
+      </div>
+      <div class="sub" id="lastUpdate">Hazır</div>
+    </div>
+
+    <div class="controls">
+      <div class="control card">
+        <label>Tarama adedi</label>
+        <select id="limit">
+          <option>50</option>
+          <option selected>100</option>
+          <option>150</option>
+          <option>200</option>
+        </select>
+      </div>
+      <div class="control card">
+        <label>Entry TF</label>
+        <select id="entryTf">
+          <option selected>5m</option>
+          <option>1m</option>
+          <option>15m</option>
+        </select>
+      </div>
+      <div class="control card">
+        <label>Trend TF</label>
+        <select id="trendTf">
+          <option selected>15m</option>
+          <option>5m</option>
+          <option>1h</option>
+        </select>
+      </div>
+      <div class="control card">
+        <label>Min güven</label>
+        <select id="minConf">
+          <option>5</option>
+          <option selected>6</option>
+          <option>7</option>
+        </select>
+      </div>
+      <div class="control card">
+        <label>Otomatik yenile</label>
+        <select id="refreshSec">
+          <option>10</option>
+          <option selected>20</option>
+          <option>30</option>
+          <option>60</option>
+        </select>
+      </div>
+      <div class="control card">
+        <label>&nbsp;</label>
+        <button onclick="runScan()">Şimdi Tara</button>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="k">Toplam taranan</div><div class="v" id="scannedCount">0</div></div>
+      <div class="stat"><div class="k">AL</div><div class="v ok" id="longCount">0</div></div>
+      <div class="stat"><div class="k">SAT</div><div class="v" style="color:#ff9b9b" id="shortCount">0</div></div>
+      <div class="stat"><div class="k">Durum</div><div class="v small" id="status">Bekliyor</div></div>
+    </div>
+
+    <div class="grid">
+      <div class="panel">
+        <h3>AL Sinyalleri</h3>
+        <table class="tbl">
+          <thead><tr><th>Coin</th><th>Güven</th><th>Fiyat</th><th>Trend</th></tr></thead>
+          <tbody id="longBody"></tbody>
+        </table>
+      </div>
+      <div class="panel">
+        <h3>SAT Sinyalleri</h3>
+        <table class="tbl">
+          <thead><tr><th>Coin</th><th>Güven</th><th>Fiyat</th><th>Trend</th></tr></thead>
+          <tbody id="shortBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="footer">
+      Mantık: trend EMA20/EMA50 + son mum yönü. Bu sürüm TradingView dışı, hafif ve geniş kapsamlı tarama içindir.
+    </div>
+  </div>
+
+<script>
+const API = "https://fapi.binance.com";
+let timer = null;
+
+function tfMap(v){
+  return v === "1m" ? "1m" : v === "5m" ? "5m" : v === "15m" ? "15m" : "15m";
+}
+function trendMap(v){
+  return v === "5m" ? "5m" : v === "15m" ? "15m" : "1h";
+}
+function ema(values, period){
+  const k = 2/(period+1);
+  let prev = values[0];
+  const arr = [prev];
+  for(let i=1;i<values.length;i++){
+    prev = values[i]*k + prev*(1-k);
+    arr.push(prev);
+  }
+  return arr;
+}
+async function getSymbols(limit){
+  const res = await fetch(`${API}/fapi/v1/exchangeInfo`);
+  const json = await res.json();
+  const syms = json.symbols
+    .filter(s => s.contractType === "PERPETUAL" && s.quoteAsset === "USDT" && s.status === "TRADING")
+    .map(s => s.symbol)
+    .slice(0, limit);
+  return syms;
+}
+async function getKlines(symbol, interval, limit=120){
+  const res = await fetch(`${API}/fapi/v1/klines?symbol=${symbol}&interval=${interval}&limit=${limit}`);
+  return await res.json();
+}
+async function scanSymbol(symbol, entryTf, trendTf, minConf){
+  const [entry, trend] = await Promise.all([
+    getKlines(symbol, entryTf, 120),
+    getKlines(symbol, trendTf, 120)
+  ]);
+  if(!Array.isArray(entry) || !Array.isArray(trend) || entry.length < 60 || trend.length < 60) return null;
+
+  const entryClose = entry.map(x => parseFloat(x[4]));
+  const entryOpen  = entry.map(x => parseFloat(x[1]));
+  const trendClose = trend.map(x => parseFloat(x[4]));
+
+  const e20 = ema(trendClose, 20);
+  const e50 = ema(trendClose, 50);
+
+  const closeNow = entryClose[entryClose.length-1];
+  const openNow  = entryOpen[entryOpen.length-1];
+
+  const longTrend = e20[e20.length-1] > e50[e50.length-1];
+  const shortTrend = e20[e20.length-1] < e50[e50.length-1];
+  const bull = closeNow > openNow;
+  const bear = closeNow < openNow;
+
+  const longConf = (longTrend ? 5 : 0) + (bull ? 2 : 0);
+  const shortConf = (shortTrend ? 5 : 0) + (bear ? 2 : 0);
+
+  let signal = "";
+  let conf = Math.max(longConf, shortConf);
+  let trendText = longTrend ? "Long" : shortTrend ? "Short" : "Mix";
+
+  if(longConf > shortConf && longConf >= minConf) signal = "AL";
+  if(shortConf > longConf && shortConf >= minConf) signal = "SAT";
+  if(!signal) return null;
+
+  return { coin:symbol, signal, confidence:conf, price:closeNow, trend:trendText };
+}
+function rowHtml(r){
+  return `<tr>
+    <td><span class="sig ${r.signal}">${r.coin}</span></td>
+    <td>${r.confidence.toFixed(1)}</td>
+    <td>${r.price.toFixed(4)}</td>
+    <td>${r.trend}</td>
+  </tr>`;
+}
+async function runScan(){
+  const limit = parseInt(document.getElementById("limit").value, 10);
+  const entryTf = tfMap(document.getElementById("entryTf").value);
+  const trendTf = trendMap(document.getElementById("trendTf").value);
+  const minConf = parseFloat(document.getElementById("minConf").value);
+
+  document.getElementById("status").textContent = "Taranıyor...";
+  document.getElementById("longBody").innerHTML = "";
+  document.getElementById("shortBody").innerHTML = "";
+
+  try{
+    const symbols = await getSymbols(limit);
+    const results = [];
+    const chunkSize = 8;
+
+    for(let i=0;i<symbols.length;i+=chunkSize){
+      const batch = symbols.slice(i, i+chunkSize);
+      const out = await Promise.all(batch.map(s => scanSymbol(s, entryTf, trendTf, minConf).catch(() => null)));
+      out.forEach(x => { if(x) results.push(x); });
+    }
+
+    const longs = results.filter(x => x.signal === "AL").sort((a,b) => b.confidence - a.confidence);
+    const shorts = results.filter(x => x.signal === "SAT").sort((a,b) => b.confidence - a.confidence);
+
+    document.getElementById("scannedCount").textContent = String(symbols.length);
+    document.getElementById("longCount").textContent = String(longs.length);
+    document.getElementById("shortCount").textContent = String(shorts.length);
+    document.getElementById("status").textContent = "Hazır";
+    document.getElementById("lastUpdate").textContent = "Son güncelleme: " + new Date().toLocaleTimeString("tr-TR");
+
+    document.getElementById("longBody").innerHTML = longs.slice(0, 25).map(rowHtml).join("") || `<tr><td colspan="4" class="muted">AL yok</td></tr>`;
+    document.getElementById("shortBody").innerHTML = shorts.slice(0, 25).map(rowHtml).join("") || `<tr><td colspan="4" class="muted">SAT yok</td></tr>`;
+  }catch(e){
+    document.getElementById("status").textContent = "Hata";
+    document.getElementById("longBody").innerHTML = `<tr><td colspan="4" class="muted">Hata: ${String(e)}</td></tr>`;
+    document.getElementById("shortBody").innerHTML = "";
+  }
+
+  resetTimer();
+}
+function resetTimer(){
+  if(timer) clearInterval(timer);
+  const sec = parseInt(document.getElementById("refreshSec").value, 10);
+  timer = setInterval(runScan, sec * 1000);
+}
+document.getElementById("refreshSec").addEventListener("change", resetTimer);
+window.onload = runScan;
+</script>
+</body>
+</html>
