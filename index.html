@@ -1,202 +1,138 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mert Sniper Perp Scanner</title>
-  <meta name="theme-color" content="#0b1020"/>
-  <link rel="manifest" href="manifest.json">
-  <style>
-    :root{
-      --bg:#0b1020; --panel:#121934; --panel2:#0f1530; --text:#eef2ff; --muted:#9aa4c7;
-      --green:#1f9d55; --red:#d64545; --amber:#d99a1a; --line:#263052; --blue:#4063d8;
-    }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:linear-gradient(180deg,#0b1020,#0a0f1d);color:var(--text)}
-    .wrap{max-width:1300px;margin:0 auto;padding:16px}
-    .top{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
-    .title{font-size:22px;font-weight:700}
-    .sub{color:var(--muted);font-size:13px}
-    .controls{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 18px}
-    .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px}
-    .control{display:flex;flex-direction:column;gap:6px;min-width:118px}
-    label{font-size:12px;color:var(--muted)}
-    input,select,button{border-radius:10px;border:1px solid var(--line);background:var(--panel2);color:var(--text);padding:10px 12px;font-size:14px}
-    button{background:#274690;border:none;font-weight:600}
-    button:hover{filter:brightness(1.08);cursor:pointer}
-    .stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-bottom:14px}
-    .stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px}
-    .stat .k{font-size:12px;color:var(--muted)}
-    .stat .v{font-size:24px;font-weight:700;margin-top:4px}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    .tbl{width:100%;border-collapse:collapse;font-size:13px}
-    .tbl th,.tbl td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
-    .tbl th{color:var(--muted);font-weight:600;position:sticky;top:0;background:var(--panel)}
-    .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:auto}
-    .panel h3{margin:0;padding:12px 14px;border-bottom:1px solid var(--line);font-size:16px}
-    .sig{font-weight:700;padding:4px 8px;border-radius:999px;display:inline-block;font-size:12px}
-    .AL{background:rgba(31,157,85,.18);color:#78f0a8}
-    .SAT{background:rgba(214,69,69,.18);color:#ff9b9b}
-    .scoreHigh{color:#78f0a8;font-weight:700}
-    .scoreMid{color:#ffd079;font-weight:700}
-    .scoreLow{color:#ff9b9b;font-weight:700}
-    .muted{color:var(--muted)}
-    .footer{margin-top:10px;color:var(--muted);font-size:12px}
-    .ok{color:#78f0a8}
-    .warn{color:#ffd079}
-    .small{font-size:12px}
-    .hint{font-size:12px;color:var(--muted);margin-top:6px}
-    @media (max-width: 1100px){
-      .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
-      .grid{grid-template-columns:1fr}
-      .title{font-size:20px}
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mert Ultra Elite Scanner</title>
+<style>
+:root{
+  --bg:#0b1020; --panel:#121934; --line:#263052; --text:#eef2ff; --muted:#9aa4c7;
+  --green:#1f9d55; --red:#d64545; --amber:#d99a1a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#0b1020,#0a0f1d);color:var(--text);font-family:Arial,sans-serif}
+.wrap{max-width:1250px;margin:0 auto;padding:14px}
+.top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+.title{font-size:22px;font-weight:700}
+.sub{font-size:12px;color:var(--muted)}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px}
+.control{display:flex;flex-direction:column;gap:6px;min-width:120px}
+label{font-size:12px;color:var(--muted)}
+select,button{padding:10px;border-radius:10px;border:1px solid var(--line);background:#0f1530;color:var(--text)}
+button{background:#274690;border:none;font-weight:700}
+button:hover{filter:brightness(1.08);cursor:pointer}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:12px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px}
+.k{font-size:12px;color:var(--muted)}
+.v{font-size:22px;font-weight:700;margin-top:4px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:auto}
+.panel h3{margin:0;padding:12px;border-bottom:1px solid var(--line)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+th{position:sticky;top:0;background:var(--panel);color:var(--muted)}
+.sig{font-weight:700;padding:4px 8px;border-radius:999px;display:inline-block;font-size:12px}
+.AL{background:rgba(31,157,85,.18);color:#78f0a8}
+.SAT{background:rgba(214,69,69,.18);color:#ff9b9b}
+.now{color:#78f0a8;font-weight:700}
+.scoreH{color:#78f0a8;font-weight:700}
+.scoreM{color:#ffd079;font-weight:700}
+.muted{color:var(--muted)}
+.footer{margin-top:10px;color:var(--muted);font-size:12px}
+@media (max-width:1100px){.stats{grid-template-columns:repeat(2,1fr)}}
+</style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="top">
-      <div>
-        <div class="title">Mert Sniper Perp Scanner</div>
-        <div class="sub">Mümkün olduğunca seçici giriş/çıkış üretir. Kesinlik garanti etmez; en iyi kullanım detail doğrulama ile.</div>
-      </div>
-      <div class="sub" id="lastUpdate">Hazır</div>
+<div class="wrap">
+  <div class="top">
+    <div>
+      <div class="title">Mert Ultra Elite Scanner</div>
+      <div class="sub">Sadece en temiz fırsatları bırakır: TOP 3, Şimdi, RR ≥ 2.0, BTC + HTF uyum.</div>
     </div>
+    <div class="sub" id="lastUpdate">Hazır</div>
+  </div>
 
-    <div class="controls">
-      <div class="control card">
-        <label>Tarama adedi</label>
-        <select id="limit">
-          <option>50</option>
-          <option>100</option>
-          <option selected>150</option>
-          <option>200</option>
-        </select>
-      </div>
-      <div class="control card">
-        <label>Entry TF</label>
-        <select id="entryTf">
-          <option>1m</option>
-          <option selected>5m</option>
-          <option>15m</option>
-        </select>
-      </div>
-      <div class="control card">
-        <label>Trend TF</label>
-        <select id="trendTf">
-          <option>5m</option>
-          <option selected>15m</option>
-          <option>1h</option>
-        </select>
-      </div>
-      <div class="control card">
-        <label>HTF</label>
-        <select id="htf">
-          <option selected>1h</option>
-          <option>4h</option>
-        </select>
-      </div>
-      <div class="control card">
-        <label>Min skor</label>
-        <select id="minScore">
-          <option>6</option>
-          <option selected>7</option>
-          <option>8</option>
-          <option>9</option>
-        </select>
-      </div>
-      <div class="control card">
-        <label>Oto yenile</label>
-        <select id="refreshSec">
-          <option>20</option>
-          <option selected>30</option>
-          <option>60</option>
-          <option>120</option>
-        </select>
-      </div>
-      <div class="control card">
-        <label>&nbsp;</label>
-        <button onclick="runScan()">Şimdi Tara</button>
-      </div>
+  <div class="controls">
+    <div class="control card">
+      <label>Tarama adedi</label>
+      <select id="limit"><option>50</option><option>100</option><option selected>150</option><option>200</option></select>
     </div>
-
-    <div class="stats">
-      <div class="stat"><div class="k">Toplam taranan</div><div class="v" id="scannedCount">0</div></div>
-      <div class="stat"><div class="k">AL</div><div class="v ok" id="longCount">0</div></div>
-      <div class="stat"><div class="k">SAT</div><div class="v" style="color:#ff9b9b" id="shortCount">0</div></div>
-      <div class="stat"><div class="k">BTC filtresi</div><div class="v small" id="btcState">-</div></div>
-      <div class="stat"><div class="k">Durum</div><div class="v small" id="status">Bekliyor</div></div>
+    <div class="control card">
+      <label>Entry TF</label>
+      <select id="entryTf"><option>1m</option><option selected>5m</option><option>15m</option></select>
     </div>
-
-    <div class="grid">
-      <div class="panel">
-        <h3>AL Sinyalleri</h3>
-        <table class="tbl">
-          <thead>
-            <tr><th>Coin</th><th>Skor</th><th>Giriş</th><th>Stop</th><th>TP1</th><th>TP2</th><th>Trend</th><th>Durum</th></tr>
-          </thead>
-          <tbody id="longBody"></tbody>
-        </table>
-      </div>
-      <div class="panel">
-        <h3>SAT Sinyalleri</h3>
-        <table class="tbl">
-          <thead>
-            <tr><th>Coin</th><th>Skor</th><th>Giriş</th><th>Stop</th><th>TP1</th><th>TP2</th><th>Trend</th><th>Durum</th></tr>
-          </thead>
-          <tbody id="shortBody"></tbody>
-        </table>
-      </div>
+    <div class="control card">
+      <label>Trend TF</label>
+      <select id="trendTf"><option>5m</option><option selected>15m</option><option>1h</option></select>
     </div>
-
-    <div class="footer">
-      Giriş noktası mantığı: trend uyumu + EMA20 pullback yakınlığı + mum yönü + BTC yön filtresi. "Şimdi" = anlık giriş, "Bekle" = tetik fiyatı bekle.
+    <div class="control card">
+      <label>HTF</label>
+      <select id="htf"><option selected>1h</option><option>4h</option></select>
+    </div>
+    <div class="control card">
+      <label>Min skor</label>
+      <select id="minScore"><option>8</option><option selected>9</option><option>10</option></select>
+    </div>
+    <div class="control card">
+      <label>Oto yenile</label>
+      <select id="refreshSec"><option>20</option><option selected>30</option><option>60</option></select>
+    </div>
+    <div class="control card">
+      <label>&nbsp;</label>
+      <button onclick="runScan()">Şimdi Tara</button>
     </div>
   </div>
 
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(()=>{}));
-}
+  <div class="stats">
+    <div class="stat"><div class="k">Toplam taranan</div><div class="v" id="scannedCount">0</div></div>
+    <div class="stat"><div class="k">AL</div><div class="v" style="color:#78f0a8" id="longCount">0</div></div>
+    <div class="stat"><div class="k">SAT</div><div class="v" style="color:#ff9b9b" id="shortCount">0</div></div>
+    <div class="stat"><div class="k">BTC yönü</div><div class="v" style="font-size:14px" id="btcState">-</div></div>
+    <div class="stat"><div class="k">Durum</div><div class="v" style="font-size:14px" id="status">Bekliyor</div></div>
+  </div>
 
+  <div class="panel">
+    <h3>TOP 3 Ultra Elite Sinyal</h3>
+    <table>
+      <thead><tr><th>Coin</th><th>Yön</th><th>Skor</th><th>Durum</th><th>Giriş</th><th>Stop</th><th>TP1</th><th>TP2</th><th>RR</th><th>Not</th></tr></thead>
+      <tbody id="body"></tbody>
+    </table>
+  </div>
+
+  <div class="footer">Filtre: BTC yönü zorunlu, HTF trend zorunlu, reclaim + near EMA + BOS/sweep, ATR filtresi, RR ≥ 2.0, sadece “Şimdi”.</div>
+</div>
+
+<script>
 const API = "https://fapi.binance.com";
 let timer = null;
 
 function fmt(n){
-  if(n === null || n === undefined || Number.isNaN(n)) return "-";
+  if(n == null || Number.isNaN(n)) return "-";
   if(Math.abs(n) >= 1000) return n.toFixed(2);
   if(Math.abs(n) >= 1) return n.toFixed(4);
   return n.toFixed(6);
 }
-function scoreClass(v){
-  return v >= 8.5 ? "scoreHigh" : v >= 7 ? "scoreMid" : "scoreLow";
-}
 function ema(values, period){
-  const k = 2 / (period + 1);
+  const k = 2/(period+1);
   let prev = values[0];
   const out = [prev];
-  for(let i=1;i<values.length;i++){
-    prev = values[i] * k + prev * (1 - k);
-    out.push(prev);
-  }
+  for(let i=1;i<values.length;i++){ prev = values[i]*k + prev*(1-k); out.push(prev); }
   return out;
 }
+function arrClose(a){ return Array.isArray(a) ? a.map(x=>parseFloat(x[4])) : []; }
+function arrOpen(a){ return Array.isArray(a) ? a.map(x=>parseFloat(x[1])) : []; }
+function arrHigh(a){ return Array.isArray(a) ? a.map(x=>parseFloat(x[2])) : []; }
+function arrLow(a){ return Array.isArray(a) ? a.map(x=>parseFloat(x[3])) : []; }
+
 function atrFromKlines(klines, period=14){
-  const highs = klines.map(x => parseFloat(x[2]));
-  const lows = klines.map(x => parseFloat(x[3]));
-  const closes = klines.map(x => parseFloat(x[4]));
+  if(!Array.isArray(klines) || klines.length < period+2) return null;
+  const h = arrHigh(klines), l = arrLow(klines), c = arrClose(klines);
   const trs = [];
   for(let i=1;i<klines.length;i++){
-    const tr = Math.max(
-      highs[i] - lows[i],
-      Math.abs(highs[i] - closes[i-1]),
-      Math.abs(lows[i] - closes[i-1])
-    );
-    trs.push(tr);
+    trs.push(Math.max(h[i]-l[i], Math.abs(h[i]-c[i-1]), Math.abs(l[i]-c[i-1])));
   }
-  if(trs.length < period) return null;
-  let atr = trs.slice(0, period).reduce((a,b)=>a+b,0) / period;
-  for(let i=period;i<trs.length;i++) atr = (atr * (period - 1) + trs[i]) / period;
+  let atr = trs.slice(0,period).reduce((a,b)=>a+b,0)/period;
+  for(let i=period;i<trs.length;i++) atr = (atr*(period-1)+trs[i])/period;
   return atr;
 }
 async function getSymbols(limit){
@@ -207,181 +143,145 @@ async function getSymbols(limit){
     .map(s => s.symbol)
     .slice(0, limit);
 }
-async function getKlines(symbol, interval, limit=120){
+async function getKlines(symbol, interval, limit=150){
   const res = await fetch(`${API}/fapi/v1/klines?symbol=${symbol}&interval=${interval}&limit=${limit}`);
   return await res.json();
 }
 async function getBtcBias(trendTf, htf){
-  const [a,b] = await Promise.all([
-    getKlines("BTCUSDT", trendTf, 120),
-    getKlines("BTCUSDT", htf, 120)
-  ]);
-  const c1 = a.map(x=>parseFloat(x[4]));
-  const c2 = b.map(x=>parseFloat(x[4]));
+  const [a,b] = await Promise.all([getKlines("BTCUSDT", trendTf), getKlines("BTCUSDT", htf)]);
+  const c1 = arrClose(a), c2 = arrClose(b);
+  if(c1.length < 60 || c2.length < 60) return "MIX";
   const e1 = ema(c1,20), e2 = ema(c1,50), e3 = ema(c2,20), e4 = ema(c2,50);
   const longBias = e1.at(-1) > e2.at(-1) && e3.at(-1) > e4.at(-1);
   const shortBias = e1.at(-1) < e2.at(-1) && e3.at(-1) < e4.at(-1);
   return longBias ? "LONG" : shortBias ? "SHORT" : "MIX";
 }
 async function scanSymbol(symbol, entryTf, trendTf, htf, minScore, btcBias){
-  const [entry, trend, highTf] = await Promise.all([
-    getKlines(symbol, entryTf, 150),
-    getKlines(symbol, trendTf, 150),
-    getKlines(symbol, htf, 150)
-  ]);
-  if(!Array.isArray(entry) || !Array.isArray(trend) || !Array.isArray(highTf)) return null;
-  if(entry.length < 80 || trend.length < 80 || highTf.length < 80) return null;
+  const [entry, trend, higher] = await Promise.all([getKlines(symbol, entryTf), getKlines(symbol, trendTf), getKlines(symbol, htf)]);
+  const ec = arrClose(entry), eo = arrOpen(entry), eh = arrHigh(entry), el = arrLow(entry);
+  const tc = arrClose(trend), hc = arrClose(higher);
+  if(ec.length < 80 || tc.length < 80 || hc.length < 80) return null;
 
-  const ec = entry.map(x => parseFloat(x[4]));
-  const eo = entry.map(x => parseFloat(x[1]));
-  const eh = entry.map(x => parseFloat(x[2]));
-  const el = entry.map(x => parseFloat(x[3]));
-  const tc = trend.map(x => parseFloat(x[4]));
-  const hc = highTf.map(x => parseFloat(x[4]));
-
-  const eE20 = ema(ec,20), eE50 = ema(ec,50);
-  const t20 = ema(tc,20), t50 = ema(tc,50);
-  const h20 = ema(hc,20), h50 = ema(hc,50);
-  const atr = atrFromKlines(entry, 14);
+  const e20 = ema(ec,20), t20 = ema(tc,20), t50 = ema(tc,50), h20 = ema(hc,20), h50 = ema(hc,50);
+  const atr = atrFromKlines(entry,14);
   if(!atr) return null;
 
   const close = ec.at(-1), open = eo.at(-1), high = eh.at(-1), low = el.at(-1);
-  const prevHigh = Math.max(...eh.slice(-11,-1));
-  const prevLow  = Math.min(...el.slice(-11,-1));
-  const pullbackPct = Math.abs(close - eE20.at(-1)) / close * 100;
-  const atrPct = atr / close * 100;
+  const atrPct = atr/close*100;
+  if(atrPct < 0.22) return null;
 
-  const longTrend = t20.at(-1) > t50.at(-1) && h20.at(-1) > h50.at(-1);
-  const shortTrend = t20.at(-1) < t50.at(-1) && h20.at(-1) < h50.at(-1);
-  const bull = close > open;
-  const bear = close < open;
-  const reclaimLong = low <= eE20.at(-1) * 1.002 && close >= eE20.at(-1);
-  const reclaimShort = high >= eE20.at(-1) * 0.998 && close <= eE20.at(-1);
-  const breakLong = close > prevHigh;
-  const breakShort = close < prevLow;
-  const btcLongOk = btcBias === "LONG" || btcBias === "MIX";
-  const btcShortOk = btcBias === "SHORT" || btcBias === "MIX";
+  const prev10High = Math.max(...eh.slice(-11,-1));
+  const prev10Low = Math.min(...el.slice(-11,-1));
+  const prev5High = Math.max(...eh.slice(-6,-1));
+  const prev5Low = Math.min(...el.slice(-6,-1));
+
+  const trendLong = t20.at(-1) > t50.at(-1) && h20.at(-1) > h50.at(-1);
+  const trendShort = t20.at(-1) < t50.at(-1) && h20.at(-1) < h50.at(-1);
+
+  const reclaimLong = low <= e20.at(-1)*1.0015 && close > e20.at(-1) && close > open;
+  const reclaimShort = high >= e20.at(-1)*0.9985 && close < e20.at(-1) && close < open;
+
+  const sweepLong = low < prev5Low && close > prev5Low;
+  const sweepShort = high > prev5High && close < prev5High;
+
+  const bosLong = close > prev10High;
+  const bosShort = close < prev10Low;
+
+  const pullbackPct = Math.abs(close - e20.at(-1))/close*100;
+  const nearEma = pullbackPct <= 0.30;
 
   let longScore = 0;
-  longScore += longTrend ? 3 : 0;
-  longScore += bull ? 1.5 : 0;
+  longScore += trendLong ? 3 : 0;
+  longScore += btcBias === "LONG" ? 2 : 0;
   longScore += reclaimLong ? 2 : 0;
-  longScore += pullbackPct <= 0.35 ? 1.5 : pullbackPct <= 0.8 ? 0.8 : 0;
-  longScore += atrPct >= 0.20 ? 1 : 0;
-  longScore += btcLongOk ? 1 : 0;
+  longScore += sweepLong ? 1.5 : 0;
+  longScore += bosLong ? 1.5 : 0;
+  longScore += nearEma ? 1 : 0;
+  longScore += atrPct >= 0.35 ? 1 : 0;
 
   let shortScore = 0;
-  shortScore += shortTrend ? 3 : 0;
-  shortScore += bear ? 1.5 : 0;
+  shortScore += trendShort ? 3 : 0;
+  shortScore += btcBias === "SHORT" ? 2 : 0;
   shortScore += reclaimShort ? 2 : 0;
-  shortScore += pullbackPct <= 0.35 ? 1.5 : pullbackPct <= 0.8 ? 0.8 : 0;
-  shortScore += atrPct >= 0.20 ? 1 : 0;
-  shortScore += btcShortOk ? 1 : 0;
+  shortScore += sweepShort ? 1.5 : 0;
+  shortScore += bosShort ? 1.5 : 0;
+  shortScore += nearEma ? 1 : 0;
+  shortScore += atrPct >= 0.35 ? 1 : 0;
 
-  const nowLong = longTrend && bull && reclaimLong && btcLongOk;
-  const nowShort = shortTrend && bear && reclaimShort && btcShortOk;
-  const waitLong = longTrend && btcLongOk && !nowLong;
-  const waitShort = shortTrend && btcShortOk && !nowShort;
-
-  let signal = "";
-  let score = 0;
-  let entryPrice = null;
-  let stop = null;
-  let tp1 = null;
-  let tp2 = null;
-  let state = "";
-  let trendText = longTrend ? "Long" : shortTrend ? "Short" : "Mix";
-
-  if(longScore >= shortScore && longScore >= minScore && (nowLong || waitLong)){
-    signal = "AL";
-    score = longScore;
-    entryPrice = nowLong ? close : eE20.at(-1);
-    stop = Math.min(prevLow, entryPrice - atr * 1.2);
-    tp1 = entryPrice + (entryPrice - stop) * 1.0;
-    tp2 = entryPrice + (entryPrice - stop) * 1.8;
-    state = nowLong ? "Şimdi" : "Bekle";
-  } else if(shortScore > longScore && shortScore >= minScore && (nowShort || waitShort)){
-    signal = "SAT";
-    score = shortScore;
-    entryPrice = nowShort ? close : eE20.at(-1);
-    stop = Math.max(prevHigh, entryPrice + atr * 1.2);
-    tp1 = entryPrice - (stop - entryPrice) * 1.0;
-    tp2 = entryPrice - (stop - entryPrice) * 1.8;
-    state = nowShort ? "Şimdi" : "Bekle";
-  } else {
-    return null;
+  if(longScore >= minScore && trendLong && btcBias === "LONG" && reclaimLong && nearEma){
+    const entryPrice = close;
+    const stop = Math.min(prev10Low, entryPrice - atr*1.2);
+    const tp1 = entryPrice + (entryPrice-stop)*1.2;
+    const tp2 = entryPrice + (entryPrice-stop)*2.0;
+    const rr = (tp2-entryPrice)/(entryPrice-stop);
+    if(rr < 2.0) return null;
+    return {coin:symbol, signal:"AL", score:longScore, state:"Şimdi", entry:entryPrice, stop, tp1, tp2, rr, note:"Trend + reclaim"};
   }
-
-  return {
-    coin:symbol,
-    signal,
-    score,
-    entry:entryPrice,
-    stop,
-    tp1,
-    tp2,
-    trend:trendText,
-    state
-  };
+  if(shortScore >= minScore && trendShort && btcBias === "SHORT" && reclaimShort && nearEma){
+    const entryPrice = close;
+    const stop = Math.max(prev10High, entryPrice + atr*1.2);
+    const tp1 = entryPrice - (stop-entryPrice)*1.2;
+    const tp2 = entryPrice - (stop-entryPrice)*2.0;
+    const rr = (entryPrice-tp2)/(stop-entryPrice);
+    if(rr < 2.0) return null;
+    return {coin:symbol, signal:"SAT", score:shortScore, state:"Şimdi", entry:entryPrice, stop, tp1, tp2, rr, note:"Trend + reclaim"};
+  }
+  return null;
 }
 function rowHtml(r){
+  const scoreCls = r.score >= 10 ? 'scoreH' : 'scoreM';
   return `<tr>
     <td><span class="sig ${r.signal}">${r.coin}</span></td>
-    <td class="${scoreClass(r.score)}">${r.score.toFixed(1)}</td>
+    <td><span class="sig ${r.signal}">${r.signal}</span></td>
+    <td class="${scoreCls}">${r.score.toFixed(1)}</td>
+    <td class="now">${r.state}</td>
     <td>${fmt(r.entry)}</td>
     <td>${fmt(r.stop)}</td>
     <td>${fmt(r.tp1)}</td>
     <td>${fmt(r.tp2)}</td>
-    <td>${r.trend}</td>
-    <td>${r.state}</td>
+    <td>${r.rr.toFixed(2)}</td>
+    <td>${r.note}</td>
   </tr>`;
 }
 async function runScan(){
-  const limit = parseInt(document.getElementById("limit").value, 10);
+  const limit = parseInt(document.getElementById("limit").value,10);
   const entryTf = document.getElementById("entryTf").value;
   const trendTf = document.getElementById("trendTf").value;
   const htf = document.getElementById("htf").value;
   const minScore = parseFloat(document.getElementById("minScore").value);
 
   document.getElementById("status").textContent = "Taranıyor...";
-  document.getElementById("longBody").innerHTML = "";
-  document.getElementById("shortBody").innerHTML = "";
+  document.getElementById("body").innerHTML = "";
 
   try{
     const [symbols, btcBias] = await Promise.all([getSymbols(limit), getBtcBias(trendTf, htf)]);
     document.getElementById("btcState").textContent = btcBias;
-
     const results = [];
-    const chunkSize = 6;
-
-    for(let i=0;i<symbols.length;i+=chunkSize){
-      const batch = symbols.slice(i, i+chunkSize);
-      const out = await Promise.all(batch.map(s => scanSymbol(s, entryTf, trendTf, htf, minScore, btcBias).catch(() => null)));
+    const chunk = 6;
+    for(let i=0;i<symbols.length;i+=chunk){
+      const batch = symbols.slice(i,i+chunk);
+      const out = await Promise.all(batch.map(s => scanSymbol(s, entryTf, trendTf, htf, minScore, btcBias).catch(()=>null)));
       out.forEach(x => { if(x) results.push(x); });
     }
 
-    const longs = results.filter(x => x.signal === "AL").sort((a,b) => b.score - a.score);
-    const shorts = results.filter(x => x.signal === "SAT").sort((a,b) => b.score - a.score);
-
+    results.sort((a,b)=> b.score-a.score || b.rr-a.rr);
+    const top = results.slice(0,3);
     document.getElementById("scannedCount").textContent = String(symbols.length);
-    document.getElementById("longCount").textContent = String(longs.length);
-    document.getElementById("shortCount").textContent = String(shorts.length);
+    document.getElementById("longCount").textContent = String(top.filter(x=>x.signal==="AL").length);
+    document.getElementById("shortCount").textContent = String(top.filter(x=>x.signal==="SAT").length);
     document.getElementById("status").textContent = "Hazır";
     document.getElementById("lastUpdate").textContent = "Son güncelleme: " + new Date().toLocaleTimeString("tr-TR");
-
-    document.getElementById("longBody").innerHTML = longs.slice(0, 25).map(rowHtml).join("") || `<tr><td colspan="8" class="muted">AL yok</td></tr>`;
-    document.getElementById("shortBody").innerHTML = shorts.slice(0, 25).map(rowHtml).join("") || `<tr><td colspan="8" class="muted">SAT yok</td></tr>`;
+    document.getElementById("body").innerHTML = top.map(rowHtml).join("") || `<tr><td colspan="10" class="muted">Ultra elite sinyal yok</td></tr>`;
   }catch(e){
     document.getElementById("status").textContent = "Hata";
-    document.getElementById("longBody").innerHTML = `<tr><td colspan="8" class="muted">Hata: ${String(e)}</td></tr>`;
-    document.getElementById("shortBody").innerHTML = "";
+    document.getElementById("body").innerHTML = `<tr><td colspan="10" class="muted">Hata: ${String(e)}</td></tr>`;
   }
   resetTimer();
 }
 function resetTimer(){
   if(timer) clearInterval(timer);
-  const sec = parseInt(document.getElementById("refreshSec").value, 10);
-  timer = setInterval(runScan, sec * 1000);
+  const sec = parseInt(document.getElementById("refreshSec").value,10);
+  timer = setInterval(runScan, sec*1000);
 }
 document.getElementById("refreshSec").addEventListener("change", resetTimer);
 window.onload = runScan;
