@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mert Ultra Elite Scanner V2</title>
+<title>Mert Ultra Elite V2 Alarm</title>
 <style>
 :root{
   --bg:#0b1020; --panel:#121934; --line:#263052; --text:#eef2ff; --muted:#9aa4c7;
-  --green:#1f9d55; --red:#d64545; --blue:#274690;
+  --green:#1f9d55; --red:#d64545; --blue:#274690; --amber:#d99a1a;
 }
 *{box-sizing:border-box}
 body{margin:0;background:linear-gradient(180deg,#0b1020,#0a0f1d);color:var(--text);font-family:Arial,sans-serif}
-.wrap{max-width:1360px;margin:0 auto;padding:14px}
+.wrap{max-width:1380px;margin:0 auto;padding:14px}
 .top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
 .title{font-size:22px;font-weight:700}
 .sub{font-size:12px;color:var(--muted)}
@@ -23,7 +23,8 @@ label{font-size:12px;color:var(--muted)}
 select,button{padding:10px;border-radius:10px;border:1px solid var(--line);background:#0f1530;color:var(--text)}
 button{background:var(--blue);border:none;font-weight:700}
 button:hover{filter:brightness(1.08);cursor:pointer}
-.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:12px}
+.secondary{background:#1a2344}
+.stats{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin-bottom:12px}
 .stat{padding:10px}
 .k{font-size:12px;color:var(--muted)}
 .v{font-size:22px;font-weight:700;margin-top:4px}
@@ -41,70 +42,69 @@ th{position:sticky;top:0;background:var(--panel);color:var(--muted)}
 .scoreH{color:#78f0a8;font-weight:700}
 .scoreM{color:#ffd079;font-weight:700}
 .scoreL{color:#ff9b9b;font-weight:700}
+.ok{color:#78f0a8;font-weight:700}
+.bad{color:#ff9b9b;font-weight:700}
+.warn{color:#ffd079;font-weight:700}
 .muted{color:var(--muted)}
 .badge{display:inline-block;padding:4px 8px;border-radius:999px;background:rgba(39,70,144,.25);color:#c9d5ff;font-size:12px}
 .footer{margin-top:10px;color:var(--muted);font-size:12px}
-.secondary{background:#1a2344}
-@media (max-width:1100px){.stats{grid-template-columns:repeat(2,1fr)}}
+.banner{display:none;margin:0 0 12px 0;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:#1a2344}
+.checks{display:flex;gap:8px;flex-wrap:wrap}
+.check{padding:4px 8px;border-radius:999px;font-size:12px;background:#0f1530;border:1px solid var(--line)}
+@media (max-width:1150px){.stats{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="top">
     <div>
-      <div class="title">Mert Ultra Elite Scanner V2</div>
-      <div class="sub">Daha az stop için geç giriş mantığı: retest + hacim + BTC momentum + RR ≥ 2.0. Günlük sinyal listesi dahil.</div>
+      <div class="title">Mert Ultra Elite Scanner V2 + Alarm</div>
+      <div class="sub">Entry sistemi ve browser alarmı eklendi. V2: retest + hacim + BTC momentum + RR ≥ 2.0.</div>
     </div>
     <div class="sub" id="lastUpdate">Hazır</div>
   </div>
 
+  <div id="alarmBanner" class="banner"></div>
+
   <div class="controls">
-    <div class="control card">
-      <label>Tarama adedi</label>
-      <select id="limit"><option>50</option><option>100</option><option selected>150</option><option>200</option></select>
-    </div>
-    <div class="control card">
-      <label>Entry TF</label>
-      <select id="entryTf"><option>1m</option><option selected>5m</option><option>15m</option></select>
-    </div>
-    <div class="control card">
-      <label>Trend TF</label>
-      <select id="trendTf"><option>5m</option><option selected>15m</option><option>1h</option></select>
-    </div>
-    <div class="control card">
-      <label>HTF</label>
-      <select id="htf"><option selected>1h</option><option>4h</option></select>
-    </div>
-    <div class="control card">
-      <label>Min skor</label>
-      <select id="minScore"><option>9</option><option selected>9.5</option><option>10</option></select>
-    </div>
-    <div class="control card">
-      <label>Oto yenile</label>
-      <select id="refreshSec"><option>20</option><option selected>30</option><option>60</option></select>
-    </div>
-    <div class="control card">
-      <label>&nbsp;</label>
-      <button onclick="runScan()">Şimdi Tara</button>
-    </div>
+    <div class="control card"><label>Tarama adedi</label><select id="limit"><option>50</option><option>100</option><option selected>150</option><option>200</option></select></div>
+    <div class="control card"><label>Entry TF</label><select id="entryTf"><option>1m</option><option selected>5m</option><option>15m</option></select></div>
+    <div class="control card"><label>Trend TF</label><select id="trendTf"><option>5m</option><option selected>15m</option><option>1h</option></select></div>
+    <div class="control card"><label>HTF</label><select id="htf"><option selected>1h</option><option>4h</option></select></div>
+    <div class="control card"><label>Min skor</label><select id="minScore"><option>9</option><option selected>9.5</option><option>10</option></select></div>
+    <div class="control card"><label>Oto yenile</label><select id="refreshSec"><option>20</option><option selected>30</option><option>60</option></select></div>
+    <div class="control card"><label>Bildirim</label><button onclick="requestNotif()">İzin Ver</button></div>
+    <div class="control card"><label>Ses Test</label><button class="secondary" onclick="playAlarm()">Test Çal</button></div>
+    <div class="control card"><label>&nbsp;</label><button onclick="runScan()">Şimdi Tara</button></div>
   </div>
 
   <div class="stats">
     <div class="stat"><div class="k">Toplam taranan</div><div class="v" id="scannedCount">0</div></div>
+    <div class="stat"><div class="k">Karar</div><div class="v" style="font-size:18px" id="decisionState">Bekliyor</div></div>
     <div class="stat"><div class="k">Anlık AL</div><div class="v" style="color:#78f0a8" id="longCount">0</div></div>
     <div class="stat"><div class="k">Anlık SAT</div><div class="v" style="color:#ff9b9b" id="shortCount">0</div></div>
     <div class="stat"><div class="k">Bugünkü kayıt</div><div class="v" id="dayCount">0</div></div>
     <div class="stat"><div class="k">BTC yönü</div><div class="v" style="font-size:14px" id="btcState">-</div></div>
-    <div class="stat"><div class="k">Durum</div><div class="v" style="font-size:14px" id="status">Bekliyor</div></div>
+    <div class="stat"><div class="k">Bildirim durumu</div><div class="v" style="font-size:14px" id="notifState">Kapalı</div></div>
   </div>
 
   <div class="grid">
     <div class="panel">
       <h3>TOP 1 V2 Sinyal</h3>
       <table>
-        <thead><tr><th>Coin</th><th>Yön</th><th>Skor</th><th>Durum</th><th>Giriş</th><th>Stop</th><th>TP1</th><th>TP2</th><th>RR</th><th>Not</th></tr></thead>
+        <thead><tr><th>Coin</th><th>Yön</th><th>Skor</th><th>Karar</th><th>Giriş</th><th>Stop</th><th>TP1</th><th>TP2</th><th>RR</th><th>Not</th></tr></thead>
         <tbody id="body"></tbody>
       </table>
+    </div>
+
+    <div class="panel">
+      <div class="toolbar">
+        <h3 style="margin:0;padding:0;border:none">Entry Kontrol Listesi</h3>
+        <span class="badge">Top 1 + BTC net + Skor 9.5+ + RR 2+ + Şimdi</span>
+      </div>
+      <div style="padding:12px">
+        <div id="checkList" class="checks"></div>
+      </div>
     </div>
 
     <div class="panel">
@@ -121,28 +121,15 @@ th{position:sticky;top:0;background:var(--panel);color:var(--muted)}
     </div>
   </div>
 
-  <div class="footer">
-    V2 mantığı: breakout değil, retest sonrası giriş. Hacim spike ve BTC momentum şartı var. Ama hiçbir sistem stopsuz değildir.
-  </div>
+  <div class="footer">Browser alarmı: yeni TOP 1 sinyal oluştuğunda banner + ses + izin verdiysen bildirim. Aynı sinyal tekrar tekrar alarm üretmez.</div>
 </div>
 
 <script>
 const API = "https://fapi.binance.com";
 let timer = null;
 
-function fmt(n){
-  if(n == null || Number.isNaN(n)) return "-";
-  if(Math.abs(n) >= 1000) return n.toFixed(2);
-  if(Math.abs(n) >= 1) return n.toFixed(4);
-  return n.toFixed(6);
-}
-function ema(values,p){
-  const k = 2/(p+1);
-  let prev = values[0];
-  const out = [prev];
-  for(let i=1;i<values.length;i++){ prev = values[i]*k + prev*(1-k); out.push(prev); }
-  return out;
-}
+function fmt(n){ if(n == null || Number.isNaN(n)) return "-"; if(Math.abs(n) >= 1000) return n.toFixed(2); if(Math.abs(n) >= 1) return n.toFixed(4); return n.toFixed(6); }
+function ema(values,p){ const k = 2/(p+1); let prev = values[0]; const out=[prev]; for(let i=1;i<values.length;i++){ prev = values[i]*k + prev*(1-k); out.push(prev);} return out; }
 const arrClose = a => Array.isArray(a) ? a.map(x=>parseFloat(x[4])) : [];
 const arrOpen = a => Array.isArray(a) ? a.map(x=>parseFloat(x[1])) : [];
 const arrHigh = a => Array.isArray(a) ? a.map(x=>parseFloat(x[2])) : [];
@@ -153,81 +140,45 @@ function atrFromKlines(klines,period=14){
   if(!Array.isArray(klines) || klines.length < period+2) return null;
   const h = arrHigh(klines), l = arrLow(klines), c = arrClose(klines);
   const trs = [];
-  for(let i=1;i<klines.length;i++){
-    trs.push(Math.max(h[i]-l[i], Math.abs(h[i]-c[i-1]), Math.abs(l[i]-c[i-1])));
-  }
+  for(let i=1;i<klines.length;i++) trs.push(Math.max(h[i]-l[i], Math.abs(h[i]-c[i-1]), Math.abs(l[i]-c[i-1])));
   let atr = trs.slice(0,period).reduce((a,b)=>a+b,0)/period;
   for(let i=period;i<trs.length;i++) atr = (atr*(period-1)+trs[i])/period;
   return atr;
 }
 
-function todayKey(){
-  const d = new Date();
-  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-}
-function checkNewDay(){
-  const k = todayKey();
-  const s = localStorage.getItem("mert_v2_day");
-  if(s !== k){
-    localStorage.setItem("mert_v2_day", k);
-    localStorage.setItem("mert_v2_daily", "[]");
-  }
-}
-function getDailySignals(){
-  checkNewDay();
-  return JSON.parse(localStorage.getItem("mert_v2_daily") || "[]");
-}
+function todayKey(){ const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+function checkNewDay(){ const k = todayKey(), s = localStorage.getItem("mert_v2_day"); if(s !== k){ localStorage.setItem("mert_v2_day",k); localStorage.setItem("mert_v2_daily","[]"); } }
+function getDailySignals(){ checkNewDay(); return JSON.parse(localStorage.getItem("mert_v2_daily") || "[]"); }
 function saveDailySignal(sig){
   checkNewDay();
   const list = getDailySignals();
   const idx = list.findIndex(x => x.coin === sig.coin && x.signal === sig.signal);
-  const payload = {
-    time: new Date().toLocaleTimeString("tr-TR"),
-    coin: sig.coin,
-    signal: sig.signal,
-    score: sig.score,
-    entry: sig.entry,
-    stop: sig.stop,
-    tp2: sig.tp2,
-    rr: sig.rr
-  };
-  if(idx >= 0){
-    if(sig.score > list[idx].score) list[idx] = payload;
-  } else {
-    list.push(payload);
-  }
+  const payload = {time:new Date().toLocaleTimeString("tr-TR"), coin:sig.coin, signal:sig.signal, score:sig.score, entry:sig.entry, stop:sig.stop, tp2:sig.tp2, rr:sig.rr};
+  if(idx >= 0){ if(sig.score > list[idx].score) list[idx] = payload; } else list.push(payload);
   list.sort((a,b)=> b.score-a.score || b.rr-a.rr);
   localStorage.setItem("mert_v2_daily", JSON.stringify(list));
 }
-function clearTodaySignals(){
-  localStorage.setItem("mert_v2_daily", "[]");
-  renderDailySignals();
-}
+function clearTodaySignals(){ localStorage.setItem("mert_v2_daily", "[]"); renderDailySignals(); }
 function renderDailySignals(){
   const list = getDailySignals();
   document.getElementById("dayCount").textContent = String(list.length);
-  document.getElementById("dailyBody").innerHTML =
-    list.map(x => `
-      <tr>
-        <td>${x.time}</td>
-        <td><span class="sig ${x.signal}">${x.coin}</span></td>
-        <td><span class="sig ${x.signal}">${x.signal}</span></td>
-        <td>${x.score.toFixed(1)}</td>
-        <td>${fmt(x.entry)}</td>
-        <td>${fmt(x.stop)}</td>
-        <td>${fmt(x.tp2)}</td>
-        <td>${x.rr.toFixed(2)}</td>
-      </tr>
-    `).join("") || `<tr><td colspan="8" class="muted">Bugün kayıt yok</td></tr>`;
+  document.getElementById("dailyBody").innerHTML = list.map(x => `
+    <tr>
+      <td>${x.time}</td>
+      <td><span class="sig ${x.signal}">${x.coin}</span></td>
+      <td><span class="sig ${x.signal}">${x.signal}</span></td>
+      <td>${x.score.toFixed(1)}</td>
+      <td>${fmt(x.entry)}</td>
+      <td>${fmt(x.stop)}</td>
+      <td>${fmt(x.tp2)}</td>
+      <td>${x.rr.toFixed(2)}</td>
+    </tr>`).join("") || `<tr><td colspan="8" class="muted">Bugün kayıt yok</td></tr>`;
 }
 
 async function getSymbols(limit){
   const res = await fetch(`${API}/fapi/v1/exchangeInfo`);
   const json = await res.json();
-  return json.symbols
-    .filter(s => s.contractType === "PERPETUAL" && s.quoteAsset === "USDT" && s.status === "TRADING")
-    .map(s => s.symbol)
-    .slice(0, limit);
+  return json.symbols.filter(s => s.contractType === "PERPETUAL" && s.quoteAsset === "USDT" && s.status === "TRADING").map(s => s.symbol).slice(0, limit);
 }
 async function getKlines(symbol,interval,limit=150){
   const res = await fetch(`${API}/fapi/v1/klines?symbol=${symbol}&interval=${interval}&limit=${limit}`);
@@ -245,12 +196,7 @@ async function getBtcBias(trendTf, htf){
 }
 
 async function scanSymbol(symbol, entryTf, trendTf, htf, minScore, btcInfo){
-  const [entry, trend, higher] = await Promise.all([
-    getKlines(symbol, entryTf),
-    getKlines(symbol, trendTf),
-    getKlines(symbol, htf)
-  ]);
-
+  const [entry, trend, higher] = await Promise.all([getKlines(symbol, entryTf), getKlines(symbol, trendTf), getKlines(symbol, htf)]);
   const ec = arrClose(entry), eo = arrOpen(entry), eh = arrHigh(entry), el = arrLow(entry), ev = arrVol(entry);
   const tc = arrClose(trend), hc = arrClose(higher);
   if(ec.length < 80 || tc.length < 80 || hc.length < 80 || ev.length < 30) return null;
@@ -265,8 +211,6 @@ async function scanSymbol(symbol, entryTf, trendTf, htf, minScore, btcInfo){
 
   const prev10High = Math.max(...eh.slice(-11,-1));
   const prev10Low = Math.min(...el.slice(-11,-1));
-  const prev5High = Math.max(...eh.slice(-6,-1));
-  const prev5Low = Math.min(...el.slice(-6,-1));
 
   const trendLong = t20.at(-1) > t50.at(-1) && h20.at(-1) > h50.at(-1);
   const trendShort = t20.at(-1) < t50.at(-1) && h20.at(-1) < h50.at(-1);
@@ -274,7 +218,6 @@ async function scanSymbol(symbol, entryTf, trendTf, htf, minScore, btcInfo){
   const avgVol = ev.slice(-21,-1).reduce((a,b)=>a+b,0) / 20;
   const volumeSpike = ev.at(-1) > avgVol * 1.5;
   if(!volumeSpike) return null;
-
   if(btcInfo.momentum < 0.15) return null;
 
   const retestLong = close > prev10High && low <= prev10High;
@@ -282,9 +225,6 @@ async function scanSymbol(symbol, entryTf, trendTf, htf, minScore, btcInfo){
 
   const reclaimLong = low <= e20.at(-1)*1.0015 && close > e20.at(-1) && close > open;
   const reclaimShort = high >= e20.at(-1)*0.9985 && close < e20.at(-1) && close < open;
-
-  const sweepLong = low < prev5Low && close > prev5Low;
-  const sweepShort = high > prev5High && close < prev5High;
 
   const pullbackPct = Math.abs(close - e20.at(-1))/close*100;
   const nearEma = pullbackPct <= 0.30;
@@ -294,7 +234,6 @@ async function scanSymbol(symbol, entryTf, trendTf, htf, minScore, btcInfo){
   longScore += btcInfo.bias === "LONG" ? 2 : 0;
   longScore += retestLong ? 2 : 0;
   longScore += reclaimLong ? 1.5 : 0;
-  longScore += sweepLong ? 1 : 0;
   longScore += nearEma ? 1 : 0;
   longScore += atrPct >= 0.35 ? 1 : 0;
 
@@ -303,7 +242,6 @@ async function scanSymbol(symbol, entryTf, trendTf, htf, minScore, btcInfo){
   shortScore += btcInfo.bias === "SHORT" ? 2 : 0;
   shortScore += retestShort ? 2 : 0;
   shortScore += reclaimShort ? 1.5 : 0;
-  shortScore += sweepShort ? 1 : 0;
   shortScore += nearEma ? 1 : 0;
   shortScore += atrPct >= 0.35 ? 1 : 0;
 
@@ -316,7 +254,6 @@ async function scanSymbol(symbol, entryTf, trendTf, htf, minScore, btcInfo){
     if(rr < 2.0) return null;
     return {coin:symbol, signal:"AL", score:longScore, state:"Şimdi", entry:entryPrice, stop, tp1, tp2, rr, note:"Retest + hacim"};
   }
-
   if(shortScore >= minScore && trendShort && btcInfo.bias === "SHORT" && retestShort && reclaimShort && nearEma){
     const entryPrice = close;
     const stop = prev10High + atr*0.5;
@@ -326,17 +263,40 @@ async function scanSymbol(symbol, entryTf, trendTf, htf, minScore, btcInfo){
     if(rr < 2.0) return null;
     return {coin:symbol, signal:"SAT", score:shortScore, state:"Şimdi", entry:entryPrice, stop, tp1, tp2, rr, note:"Retest + hacim"};
   }
-
   return null;
+}
+
+function renderChecks(top, btcInfo){
+  const checks = [];
+  checks.push({txt:`BTC ${btcInfo.bias}`, ok: btcInfo.bias !== "MIX"});
+  checks.push({txt:`Momentum ${btcInfo.momentum.toFixed(2)}%`, ok: btcInfo.momentum >= 0.15});
+  if(top){
+    checks.push({txt:`Top 1 var`, ok:true});
+    checks.push({txt:`Şimdi`, ok: top.state === "Şimdi"});
+    checks.push({txt:`Skor ${top.score.toFixed(1)}`, ok: top.score >= 9.5});
+    checks.push({txt:`RR ${top.rr.toFixed(2)}`, ok: top.rr >= 2.0});
+  } else {
+    checks.push({txt:`Top 1 yok`, ok:false});
+  }
+  document.getElementById("checkList").innerHTML = checks.map(c => `<span class="check ${c.ok ? 'ok':'bad'}">${c.ok ? '✓' : '✗'} ${c.txt}</span>`).join('');
+}
+
+function getDecision(top, btcInfo){
+  if(!top) return {label:"İŞLEM YOK", cls:"bad"};
+  if(btcInfo.bias === "MIX") return {label:"GİRME", cls:"bad"};
+  if(top.state !== "Şimdi") return {label:"BEKLE", cls:"warn"};
+  if(top.score < 9.5 || top.rr < 2.0) return {label:"GİRME", cls:"bad"};
+  return {label:`GİR (${top.signal})`, cls:"ok"};
 }
 
 function rowHtml(r){
   const scoreCls = r.score >= 10 ? 'scoreH' : r.score >= 9.5 ? 'scoreM' : 'scoreL';
+  const decision = r.state === "Şimdi" && r.score >= 9.5 && r.rr >= 2 ? "GİR" : "GİRME";
   return `<tr>
     <td><span class="sig ${r.signal}">${r.coin}</span></td>
     <td><span class="sig ${r.signal}">${r.signal}</span></td>
     <td class="${scoreCls}">${r.score.toFixed(1)}</td>
-    <td class="now">${r.state}</td>
+    <td class="now">${decision}</td>
     <td>${fmt(r.entry)}</td>
     <td>${fmt(r.stop)}</td>
     <td>${fmt(r.tp1)}</td>
@@ -344,6 +304,50 @@ function rowHtml(r){
     <td>${r.rr.toFixed(2)}</td>
     <td>${r.note}</td>
   </tr>`;
+}
+
+function requestNotif(){
+  if(!("Notification" in window)){ alert("Bu tarayıcı notification desteklemiyor."); return; }
+  Notification.requestPermission().then(updateNotifState);
+}
+function updateNotifState(){
+  const s = ("Notification" in window) ? Notification.permission : "unsupported";
+  const label = s === "granted" ? "Açık" : s === "denied" ? "Engelli" : s === "default" ? "İzin bekliyor" : "Destek yok";
+  document.getElementById("notifState").textContent = label;
+}
+function playAlarm(){
+  try{
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.type = "sine"; o.frequency.value = 880;
+    o.connect(g); g.connect(ctx.destination);
+    g.gain.value = 0.001;
+    o.start();
+    g.gain.exponentialRampToValueAtTime(0.08, ctx.currentTime + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.35);
+    o.stop(ctx.currentTime + 0.35);
+  }catch(e){}
+}
+function triggerAlarm(top){
+  if(!top) return;
+  const key = `${todayKey()}|${top.coin}|${top.signal}|${top.score.toFixed(1)}|${fmt(top.entry)}`;
+  const prev = localStorage.getItem("mert_alarm_key");
+  if(prev === key) return;
+  localStorage.setItem("mert_alarm_key", key);
+
+  const banner = document.getElementById("alarmBanner");
+  banner.style.display = "block";
+  banner.innerHTML = `🔥 Yeni V2 sinyal: <strong>${top.coin}</strong> | ${top.signal} | Giriş ${fmt(top.entry)} | Stop ${fmt(top.stop)} | TP2 ${fmt(top.tp2)} | RR ${top.rr.toFixed(2)}`;
+  playAlarm();
+
+  if("Notification" in window && Notification.permission === "granted"){
+    try{
+      new Notification("Yeni V2 Sinyal", {
+        body: `${top.coin} | ${top.signal} | Giriş ${fmt(top.entry)} | Stop ${fmt(top.stop)} | TP2 ${fmt(top.tp2)}`
+      });
+    }catch(e){}
+  }
 }
 
 async function runScan(){
@@ -354,6 +358,7 @@ async function runScan(){
   const htf = document.getElementById("htf").value;
   const minScore = parseFloat(document.getElementById("minScore").value);
 
+  document.getElementById("decisionState").textContent = "Taranıyor...";
   document.getElementById("status").textContent = "Taranıyor...";
   document.getElementById("body").innerHTML = "";
 
@@ -381,14 +386,25 @@ async function runScan(){
     document.getElementById("status").textContent = "Hazır";
     document.getElementById("lastUpdate").textContent = "Son güncelleme: " + new Date().toLocaleTimeString("tr-TR");
     document.getElementById("body").innerHTML = top.map(rowHtml).join("") || `<tr><td colspan="10" class="muted">V2 sinyal yok</td></tr>`;
+
+    const best = top[0] || null;
+    renderChecks(best, btcInfo);
+    const decision = getDecision(best, btcInfo);
+    document.getElementById("decisionState").innerHTML = `<span class="${decision.cls}">${decision.label}</span>`;
+
+    if(best && decision.label.startsWith("GİR")){
+      triggerAlarm(best);
+    }
   }catch(e){
     document.getElementById("status").textContent = "Hata";
     document.getElementById("body").innerHTML = `<tr><td colspan="10" class="muted">Hata: ${String(e)}</td></tr>`;
+    renderChecks(null, {bias:"MIX", momentum:0});
+    document.getElementById("decisionState").innerHTML = `<span class="bad">HATA</span>`;
   }
 
+  updateNotifState();
   resetTimer();
 }
-
 function resetTimer(){
   if(timer) clearInterval(timer);
   const sec = parseInt(document.getElementById("refreshSec").value,10);
@@ -397,6 +413,7 @@ function resetTimer(){
 
 document.getElementById("refreshSec").addEventListener("change", resetTimer);
 renderDailySignals();
+updateNotifState();
 window.onload = runScan;
 </script>
 </body>
