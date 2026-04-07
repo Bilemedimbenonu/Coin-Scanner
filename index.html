@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mert Scanner Sweep Filter</title>
+<title>Mert Scanner Smart Exit</title>
 <style>
 :root{
   --bg:#0b1020; --panel:#121934; --line:#263052; --text:#eef2ff; --muted:#9aa4c7;
@@ -11,7 +11,7 @@
 }
 *{box-sizing:border-box}
 body{margin:0;background:linear-gradient(180deg,#0b1020,#0a0f1d);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
-.wrap{max-width:1380px;margin:0 auto;padding:14px}
+.wrap{max-width:1400px;margin:0 auto;padding:14px}
 .top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
 .title{font-size:22px;font-weight:700}
 .sub{font-size:12px;color:var(--muted)}
@@ -47,15 +47,19 @@ th{position:sticky;top:0;background:var(--panel);color:var(--muted)}
 .info{padding:12px 14px}
 .big{font-size:18px;font-weight:700}
 .small{font-size:12px;color:var(--muted)}
-@media (max-width:1150px){.stats{grid-template-columns:repeat(2,1fr)}}
+.exitgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.exititem{background:#0f1530;border:1px solid var(--line);border-radius:10px;padding:10px}
+.exitlabel{font-size:12px;color:var(--muted);margin-bottom:6px}
+.exitvalue{font-size:18px;font-weight:700}
+@media (max-width:1150px){.stats{grid-template-columns:repeat(2,1fr)} .exitgrid{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="top">
     <div>
-      <div class="title">Mert Scanner Sweep Filter</div>
-      <div class="sub">Sinyal + Gir/Girme + Günlük liste. Sweep, wick ve confirmation filtreleri eklendi.</div>
+      <div class="title">Mert Scanner Smart Exit</div>
+      <div class="sub">Sinyal + Gir/Girme + Günlük liste + akıllı çıkış mantığı. TP1 sonrası BE ve güç kaybında erken çıkış önerisi.</div>
     </div>
     <div class="sub" id="lastUpdate">Hazır</div>
   </div>
@@ -77,8 +81,8 @@ th{position:sticky;top:0;background:var(--panel);color:var(--muted)}
     <div class="stat"><div class="k">BTC yönü</div><div class="v" style="font-size:15px" id="btc">-</div></div>
     <div class="stat"><div class="k">Durum</div><div class="v" style="font-size:15px" id="status">Bekliyor</div></div>
     <div class="stat"><div class="k">Karar</div><div class="v" style="font-size:18px" id="decision">Bekliyor</div></div>
+    <div class="stat"><div class="k">Smart Exit</div><div class="v" style="font-size:15px" id="exitDecision">Bekliyor</div></div>
     <div class="stat"><div class="k">Bugünkü kayıt</div><div class="v" id="dayCount">0</div></div>
-    <div class="stat"><div class="k">Filtre</div><div class="v" style="font-size:15px">Sweep</div></div>
   </div>
 
   <div class="grid">
@@ -99,6 +103,20 @@ th{position:sticky;top:0;background:var(--panel);color:var(--muted)}
     </div>
 
     <div class="panel">
+      <h3>Smart Exit</h3>
+      <div class="info">
+        <div class="exitgrid">
+          <div class="exititem"><div class="exitlabel">Pozisyon Durumu</div><div class="exitvalue" id="posState">-</div></div>
+          <div class="exititem"><div class="exitlabel">TP1 Sonrası</div><div class="exitvalue" id="afterTp1">-</div></div>
+          <div class="exititem"><div class="exitlabel">Stop Yönetimi</div><div class="exitvalue" id="stopMgmt">-</div></div>
+          <div class="exititem"><div class="exitlabel">Güç Kaybı</div><div class="exitvalue" id="weaknessExit">-</div></div>
+          <div class="exititem"><div class="exitlabel">Ne Yapmalı</div><div class="exitvalue" id="actionPlan">-</div></div>
+        </div>
+        <div class="small" style="margin-top:10px" id="exitReason">Sinyal geldiğinde akıllı çıkış planı burada oluşur.</div>
+      </div>
+    </div>
+
+    <div class="panel">
       <div class="toolbar">
         <h3 style="margin:0;padding:0;border:none">Bugünün Sinyalleri</h3>
         <span class="badge">Yeni günün ilk taramasında otomatik temizlenir</span>
@@ -112,7 +130,7 @@ th{position:sticky;top:0;background:var(--panel);color:var(--muted)}
     </div>
   </div>
 
-  <div class="footer">Sweep filtre: eski high/low önce süpürülmeli, sonra reclaim ve confirmation candle gelmeli. Fake spike ve stop avlarını azaltmak için wick filtresi de eklendi.</div>
+  <div class="footer">Smart Exit mantığı: TP1 görülürse stop entry’ye çekilir, güç kaybı oluşursa TP2 beklenmeden erken çıkış önerilir. Bu sürüm işlem açmaz; plan verir.</div>
 </div>
 
 <script>
@@ -133,8 +151,8 @@ function updateBTC(txt){ document.querySelector("#btc").innerText = txt; }
 function updateProgress(done,total){ document.querySelector("#progress").innerText = `${done}/${total}`; }
 
 function todayKey(){ const d=new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
-function checkNewDay(){ const k=todayKey(), saved=localStorage.getItem("mert_sweep_day"); if(saved!==k){ localStorage.setItem("mert_sweep_day",k); localStorage.setItem("mert_sweep_signals","[]"); } }
-function getDailySignals(){ checkNewDay(); return JSON.parse(localStorage.getItem("mert_sweep_signals")||"[]"); }
+function checkNewDay(){ const k=todayKey(), saved=localStorage.getItem("mert_smart_day"); if(saved!==k){ localStorage.setItem("mert_smart_day",k); localStorage.setItem("mert_smart_signals","[]"); } }
+function getDailySignals(){ checkNewDay(); return JSON.parse(localStorage.getItem("mert_smart_signals")||"[]"); }
 function saveDailySignal(sig){
   checkNewDay();
   const list=getDailySignals();
@@ -142,9 +160,9 @@ function saveDailySignal(sig){
   const payload={ time:new Date().toLocaleTimeString("tr-TR"), coin:sig.coin, signal:sig.signal, score:sig.score, entry:sig.entry, stop:sig.stop, tp2:sig.tp2, rr:sig.rr };
   if(idx>=0){ if(sig.score>list[idx].score) list[idx]=payload; } else list.push(payload);
   list.sort((a,b)=>b.score-a.score || b.rr-a.rr);
-  localStorage.setItem("mert_sweep_signals", JSON.stringify(list));
+  localStorage.setItem("mert_smart_signals", JSON.stringify(list));
 }
-function clearTodaySignals(){ localStorage.setItem("mert_sweep_signals","[]"); renderDailySignals(); }
+function clearTodaySignals(){ localStorage.setItem("mert_smart_signals","[]"); renderDailySignals(); }
 function renderDailySignals(){
   const list=getDailySignals();
   document.querySelector("#dayCount").innerText = String(list.length);
@@ -174,14 +192,9 @@ function atrFromKlines(klines, period=14){
 async function getJSON(url){ const res=await fetch(url); return await res.json(); }
 async function getSymbols(limit){
   const json=await getJSON(`${API}/fapi/v1/exchangeInfo`);
-  return json.symbols
-    .filter(s=>s.contractType==="PERPETUAL" && s.quoteAsset==="USDT" && s.status==="TRADING")
-    .map(s=>s.symbol)
-    .slice(0,limit);
+  return json.symbols.filter(s=>s.contractType==="PERPETUAL" && s.quoteAsset==="USDT" && s.status==="TRADING").map(s=>s.symbol).slice(0,limit);
 }
-async function getKlines(symbol, interval, limit=140){
-  return await getJSON(`${API}/fapi/v1/klines?symbol=${symbol}&interval=${interval}&limit=${limit}`);
-}
+async function getKlines(symbol, interval, limit=140){ return await getJSON(`${API}/fapi/v1/klines?symbol=${symbol}&interval=${interval}&limit=${limit}`); }
 async function getBTCInfo(trendTf, htf){
   try{
     const [a,b]=await Promise.all([getKlines("BTCUSDT", trendTf), getKlines("BTCUSDT", htf)]);
@@ -197,28 +210,13 @@ async function getBTCInfo(trendTf, htf){
   }
 }
 
-function candleMetrics(open, high, low, close){
-  const range = Math.max(high-low, 0.0000001);
-  const body = Math.abs(close-open);
-  const upperWick = high - Math.max(open, close);
-  const lowerWick = Math.min(open, close) - low;
-  return { range, body, upperWick, lowerWick, bodyRatio: body/range };
-}
-
 async function scanCoin(symbol, entryTf, trendTf, htf, minScore, btcInfo){
   try{
-    const [entry, trend, higher] = await Promise.all([
-      getKlines(symbol, entryTf),
-      getKlines(symbol, trendTf),
-      getKlines(symbol, htf)
-    ]);
-
+    const [entry, trend, higher] = await Promise.all([getKlines(symbol, entryTf), getKlines(symbol, trendTf), getKlines(symbol, htf)]);
     const ec=arrClose(entry), eo=arrOpen(entry), eh=arrHigh(entry), el=arrLow(entry), ev=arrVol(entry);
     const tc=arrClose(trend), hc=arrClose(higher);
     if(ec.length<90 || tc.length<90 || hc.length<90 || ev.length<30) return null;
-
-    if(btcInfo.bias==="MIX") return null;
-    if(btcInfo.momentum < 0.15) return null;
+    if(btcInfo.bias==="MIX" || btcInfo.momentum < 0.15) return null;
 
     const e20=ema(ec,20), e50=ema(ec,50), t20=ema(tc,20), t50=ema(tc,50), h20=ema(hc,20), h50=ema(hc,50);
     const atr=atrFromKlines(entry,14);
@@ -226,7 +224,6 @@ async function scanCoin(symbol, entryTf, trendTf, htf, minScore, btcInfo){
 
     const close=ec.at(-1), open=eo.at(-1), high=eh.at(-1), low=el.at(-1);
     const prevClose=ec.at(-2), prevOpen=eo.at(-2), prevHigh=eh.at(-2), prevLow=el.at(-2);
-
     const avgVol=ev.slice(-21,-1).reduce((a,b)=>a+b,0)/20;
     const volumeSpike=ev.at(-1) > avgVol * 1.5;
     if(!volumeSpike) return null;
@@ -234,33 +231,30 @@ async function scanCoin(symbol, entryTf, trendTf, htf, minScore, btcInfo){
     const atrPct=atr/close*100;
     if(atrPct < 0.22) return null;
 
-    const trendLong=t20.at(-1) > t50.at(-1) && h20.at(-1) > h50.at(-1);
-    const trendShort=t20.at(-1) < t50.at(-1) && h20.at(-1) < h50.at(-1);
+    const trendLong=t20.at(-1)>t50.at(-1) && h20.at(-1)>h50.at(-1);
+    const trendShort=t20.at(-1)<t50.at(-1) && h20.at(-1)<h50.at(-1);
 
     const recentHigh=Math.max(...eh.slice(-16,-1));
     const recentLow=Math.min(...el.slice(-16,-1));
 
-    // Sweep + reclaim
     const sweepLong = low < recentLow && close > recentLow;
     const sweepShort = high > recentHigh && close < recentHigh;
 
-    // confirmation candle (current candle) and previous sweep candle
-    const cm = candleMetrics(open, high, low, close);
-    const pm = candleMetrics(prevOpen, prevHigh, prevLow, prevClose);
+    const range=Math.max(high-low, 0.0000001);
+    const body=Math.abs(close-open);
+    const upperWick=high-Math.max(open,close);
+    const lowerWick=Math.min(open,close)-low;
+    const bodyRatio=body/range;
 
-    const confirmLong = close > open && cm.bodyRatio >= 0.45 && cm.upperWick <= cm.range * 0.25;
-    const confirmShort = close < open && cm.bodyRatio >= 0.45 && cm.lowerWick <= cm.range * 0.25;
+    const confirmLong = close > open && bodyRatio >= 0.45 && upperWick <= range * 0.25;
+    const confirmShort = close < open && bodyRatio >= 0.45 && lowerWick <= range * 0.25;
 
-    // reclaim ema after sweep
     const reclaimLong = close > e20.at(-1) && low <= e20.at(-1) * 1.002;
     const reclaimShort = close < e20.at(-1) && high >= e20.at(-1) * 0.998;
 
-    // avoid extended entries
     const nearEma = Math.abs(close - e20.at(-1)) / close * 100 <= 0.35;
-
-    // avoid fake spikes with giant opposite wick
-    const noFakeLong = cm.upperWick <= cm.range * 0.30;
-    const noFakeShort = cm.lowerWick <= cm.range * 0.30;
+    const noFakeLong = upperWick <= range * 0.30;
+    const noFakeShort = lowerWick <= range * 0.30;
 
     let longScore=0;
     longScore += trendLong ? 3 : 0;
@@ -289,7 +283,7 @@ async function scanCoin(symbol, entryTf, trendTf, htf, minScore, btcInfo){
       const tp2=entryPrice + (entryPrice-stop)*2.2;
       const rr=(tp2-entryPrice)/(entryPrice-stop);
       if(rr < 2.0) return null;
-      return {coin:symbol, signal:"AL", score:longScore, entry:entryPrice, stop, tp1, tp2, rr, note:"Sweep + reclaim + confirm"};
+      return {coin:symbol, signal:"AL", score:longScore, entry:entryPrice, stop, tp1, tp2, rr, note:"Sweep + reclaim + confirm", raw:{close, e20:e20.at(-1), atr}};
     }
 
     if(shortScore >= minScore && trendShort && btcInfo.bias==="SHORT" && sweepShort && reclaimShort && confirmShort && nearEma && noFakeShort){
@@ -299,7 +293,7 @@ async function scanCoin(symbol, entryTf, trendTf, htf, minScore, btcInfo){
       const tp2=entryPrice - (stop-entryPrice)*2.2;
       const rr=(entryPrice-tp2)/(stop-entryPrice);
       if(rr < 2.0) return null;
-      return {coin:symbol, signal:"SAT", score:shortScore, entry:entryPrice, stop, tp1, tp2, rr, note:"Sweep + reclaim + confirm"};
+      return {coin:symbol, signal:"SAT", score:shortScore, entry:entryPrice, stop, tp1, tp2, rr, note:"Sweep + reclaim + confirm", raw:{close, e20:e20.at(-1), atr}};
     }
 
     return null;
@@ -328,7 +322,7 @@ function renderDecision(sig, btcInfo){
   const reason=document.querySelector("#entryReason");
   if(!sig){
     title.innerHTML=`<span class="bad">GİRME</span>`;
-    reason.innerText = btcInfo.bias==="MIX" ? "BTC yönü MIX. Sistem bilinçli olarak işlem vermiyor." : "Sweep + reclaim + confirmation aynı anda oluşmadı.";
+    reason.innerText = btcInfo.bias==="MIX" ? "BTC yönü MIX. Sistem bilinçli olarak işlem vermiyor." : "Sweep + reclaim + confirmation birlikte oluşmadı.";
     document.querySelector("#decision").innerHTML=`<span class="bad">GİRME</span>`;
     return;
   }
@@ -342,6 +336,30 @@ function renderDecision(sig, btcInfo){
     reason.innerText=`Sinyal var ama giriş filtresi tam onay vermedi.`;
     document.querySelector("#decision").innerHTML=`<span class="warn">BEKLE</span>`;
   }
+}
+function renderSmartExit(sig){
+  const posState=document.querySelector("#posState");
+  const afterTp1=document.querySelector("#afterTp1");
+  const stopMgmt=document.querySelector("#stopMgmt");
+  const weaknessExit=document.querySelector("#weaknessExit");
+  const actionPlan=document.querySelector("#actionPlan");
+  const exitDecision=document.querySelector("#exitDecision");
+  const exitReason=document.querySelector("#exitReason");
+
+  if(!sig){
+    posState.innerText="-"; afterTp1.innerText="-"; stopMgmt.innerText="-"; weaknessExit.innerText="-"; actionPlan.innerText="-";
+    exitDecision.innerHTML=`<span class="bad">POZİSYON YOK</span>`;
+    exitReason.innerText="Sinyal geldiğinde burada TP1 sonrası ne yapılacağı ve erken çıkış planı gösterilir.";
+    return;
+  }
+
+  posState.innerText = `${sig.signal} hazırlık`;
+  afterTp1.innerText = "Stop → Entry";
+  stopMgmt.innerText = `BE @ ${fmt(sig.entry)}`;
+  weaknessExit.innerText = sig.signal === "AL" ? "E20 altı kapanışta çık" : "E20 üstü kapanışta çık";
+  actionPlan.innerText = "TP1 %50 / TP2 kalan";
+  exitDecision.innerHTML = `<span class="ok">AKILLI ÇIKIŞ AKTİF</span>`;
+  exitReason.innerText = `Plan: TP1 görüldüğünde pozisyonun yarısını kapat, stop'u entry'ye çek. Güç kaybı olursa TP2 beklemeden çık.`;
 }
 function alarm(sig){
   if(!sig) return;
@@ -367,6 +385,7 @@ async function scanAll(){
   updateStatus("Taranıyor...");
   updateProgress(0,total);
   renderSignal(null);
+  renderSmartExit(null);
 
   const btcInfo=await getBTCInfo(trendTf, htf);
   updateBTC(`${btcInfo.bias} | Mom ${btcInfo.momentum.toFixed(2)}%`);
@@ -390,6 +409,7 @@ async function scanAll(){
 
   renderSignal(best);
   renderDecision(best, btcInfo);
+  renderSmartExit(best);
   if(best) saveDailySignal(best);
   renderDailySignals();
   alarm(best);
