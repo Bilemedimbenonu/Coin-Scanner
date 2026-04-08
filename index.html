@@ -3,54 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mert Scanner Smart Exit</title>
+<title>Mert Scanner Pro Mode V2</title>
 <style>
-:root{
-  --bg:#0b1020; --panel:#121934; --line:#263052; --text:#eef2ff; --muted:#9aa4c7;
-  --green:#1f9d55; --red:#d64545; --amber:#d99a1a; --blue:#274690;
-}
+:root{--bg:#0b1020;--panel:#121934;--line:#263052;--text:#eef2ff;--muted:#9aa4c7;--green:#1f9d55;--red:#d64545;--amber:#d99a1a;--blue:#274690}
 *{box-sizing:border-box}
 body{margin:0;background:linear-gradient(180deg,#0b1020,#0a0f1d);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
 .wrap{max-width:1400px;margin:0 auto;padding:14px}
 .top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
-.title{font-size:22px;font-weight:700}
-.sub{font-size:12px;color:var(--muted)}
+.title{font-size:22px;font-weight:700}.sub{font-size:12px;color:var(--muted)}
 .controls{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
-.card,.stat,.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px}
-.card{padding:10px}
-.control{display:flex;flex-direction:column;gap:6px;min-width:120px}
-label{font-size:12px;color:var(--muted)}
+.card,.stat,.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px}.card{padding:10px}
+.control{display:flex;flex-direction:column;gap:6px;min-width:120px}label{font-size:12px;color:var(--muted)}
 select,button{padding:10px;border-radius:10px;border:1px solid var(--line);background:#0f1530;color:var(--text)}
 button{background:var(--blue);border:none;font-weight:700}
-button:hover{filter:brightness(1.08);cursor:pointer}
 .secondary{background:#1a2344}
-.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:12px}
-.stat{padding:10px}
-.k{font-size:12px;color:var(--muted)}
-.v{font-size:22px;font-weight:700;margin-top:4px}
-.grid{display:grid;grid-template-columns:1fr;gap:12px}
-.panel{overflow:auto}
-.panel h3{margin:0;padding:12px;border-bottom:1px solid var(--line)}
+.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:12px}.stat{padding:10px}
+.k{font-size:12px;color:var(--muted)}.v{font-size:22px;font-weight:700;margin-top:4px}
+.grid{display:grid;grid-template-columns:1fr;gap:12px}.panel{overflow:auto}.panel h3{margin:0;padding:12px;border-bottom:1px solid var(--line)}
 .toolbar{display:flex;gap:10px;align-items:center;padding:10px 12px;border-bottom:1px solid var(--line);flex-wrap:wrap}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
 th{position:sticky;top:0;background:var(--panel);color:var(--muted)}
 .sig{font-weight:700;padding:4px 8px;border-radius:999px;display:inline-block;font-size:12px}
-.AL{background:rgba(31,157,85,.18);color:#78f0a8}
-.SAT{background:rgba(214,69,69,.18);color:#ff9b9b}
-.ok{color:#78f0a8;font-weight:700}
-.bad{color:#ff9b9b;font-weight:700}
-.warn{color:#ffd079;font-weight:700}
-.muted{color:var(--muted)}
+.AL{background:rgba(31,157,85,.18);color:#78f0a8}.SAT{background:rgba(214,69,69,.18);color:#ff9b9b}
+.ok{color:#78f0a8;font-weight:700}.bad{color:#ff9b9b;font-weight:700}.warn{color:#ffd079;font-weight:700}.muted{color:var(--muted)}
 .badge{display:inline-block;padding:4px 8px;border-radius:999px;background:rgba(39,70,144,.25);color:#c9d5ff;font-size:12px}
 .banner{display:none;margin:0 0 12px 0;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:#1a2344}
-.info{padding:12px 14px}
-.big{font-size:18px;font-weight:700}
-.small{font-size:12px;color:var(--muted)}
+.info{padding:12px 14px}.big{font-size:18px;font-weight:700}.small{font-size:12px;color:var(--muted)}
 .exitgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
 .exititem{background:#0f1530;border:1px solid var(--line);border-radius:10px;padding:10px}
-.exitlabel{font-size:12px;color:var(--muted);margin-bottom:6px}
-.exitvalue{font-size:18px;font-weight:700}
+.exitlabel{font-size:12px;color:var(--muted);margin-bottom:6px}.exitvalue{font-size:18px;font-weight:700}
 @media (max-width:1150px){.stats{grid-template-columns:repeat(2,1fr)} .exitgrid{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
@@ -58,12 +39,11 @@ th{position:sticky;top:0;background:var(--panel);color:var(--muted)}
 <div class="wrap">
   <div class="top">
     <div>
-      <div class="title">Mert Scanner Smart Exit</div>
-      <div class="sub">Sinyal + Gir/Girme + Günlük liste + akıllı çıkış mantığı. TP1 sonrası BE ve güç kaybında erken çıkış önerisi.</div>
+      <div class="title">Mert Scanner Pro Mode V2</div>
+      <div class="sub">Multi-candle sweep mantığı: sweep önceki mumda, reclaim/confirm sonraki mumda. Daha verimli, ama hâlâ seçici.</div>
     </div>
     <div class="sub" id="lastUpdate">Hazır</div>
   </div>
-
   <div id="alarmBanner" class="banner"></div>
 
   <div class="controls">
@@ -71,7 +51,7 @@ th{position:sticky;top:0;background:var(--panel);color:var(--muted)}
     <div class="control card"><label>Entry TF</label><select id="entryTf"><option>1m</option><option selected>5m</option><option>15m</option></select></div>
     <div class="control card"><label>Trend TF</label><select id="trendTf"><option>5m</option><option selected>15m</option><option>1h</option></select></div>
     <div class="control card"><label>HTF</label><select id="htf"><option selected>1h</option><option>4h</option></select></div>
-    <div class="control card"><label>Min skor</label><select id="minScore"><option>9</option><option selected>9.5</option><option>10</option></select></div>
+    <div class="control card"><label>Min skor</label><select id="minScore"><option>8.5</option><option>9</option><option selected>9.5</option><option>10</option></select></div>
     <div class="control card"><label>Oto yenile</label><select id="refreshSec"><option>20</option><option selected>30</option><option>60</option></select></div>
     <div class="control card"><label>&nbsp;</label><button onclick="scanAll()">Şimdi Tara</button></div>
   </div>
@@ -130,306 +110,84 @@ th{position:sticky;top:0;background:var(--panel);color:var(--muted)}
     </div>
   </div>
 
-  <div class="footer">Smart Exit mantığı: TP1 görülürse stop entry’ye çekilir, güç kaybı oluşursa TP2 beklenmeden erken çıkış önerilir. Bu sürüm işlem açmaz; plan verir.</div>
+  <div class="footer">V2 farkı: sweep + reclaim + confirmation aynı mumda aranmaz. Önceki mum sweep yapar, son mum onay verir. Bu genelde daha verimlidir.</div>
 </div>
 
 <script>
 const API = "https://fapi.binance.com";
 let isScanning = false, timer = null, lastAlarmKey = null;
-
-function fmt(n){ if(n == null || Number.isNaN(n)) return "-"; if(Math.abs(n) >= 1000) return n.toFixed(2); if(Math.abs(n) >= 1) return n.toFixed(4); return n.toFixed(6); }
+const fmt=n=>n==null||Number.isNaN(n)?"-":Math.abs(n)>=1000?n.toFixed(2):Math.abs(n)>=1?n.toFixed(4):n.toFixed(6);
 function ema(values,p){ const k=2/(p+1); let prev=values[0]; const out=[prev]; for(let i=1;i<values.length;i++){ prev=values[i]*k+prev*(1-k); out.push(prev);} return out; }
-function arrClose(a){ return Array.isArray(a)?a.map(x=>parseFloat(x[4])):[]; }
-function arrOpen(a){ return Array.isArray(a)?a.map(x=>parseFloat(x[1])):[]; }
-function arrHigh(a){ return Array.isArray(a)?a.map(x=>parseFloat(x[2])):[]; }
-function arrLow(a){ return Array.isArray(a)?a.map(x=>parseFloat(x[3])):[]; }
-function arrVol(a){ return Array.isArray(a)?a.map(x=>parseFloat(x[5])):[]; }
-function sleep(ms){ return new Promise(res=>setTimeout(res,ms)); }
-
-function updateStatus(txt){ document.querySelector("#status").innerText = txt; }
-function updateBTC(txt){ document.querySelector("#btc").innerText = txt; }
-function updateProgress(done,total){ document.querySelector("#progress").innerText = `${done}/${total}`; }
-
+const arrClose=a=>Array.isArray(a)?a.map(x=>parseFloat(x[4])):[];
+const arrOpen=a=>Array.isArray(a)?a.map(x=>parseFloat(x[1])):[];
+const arrHigh=a=>Array.isArray(a)?a.map(x=>parseFloat(x[2])):[];
+const arrLow=a=>Array.isArray(a)?a.map(x=>parseFloat(x[3])):[];
+const arrVol=a=>Array.isArray(a)?a.map(x=>parseFloat(x[5])):[];
+const sleep=ms=>new Promise(res=>setTimeout(res,ms));
+const updateStatus=txt=>document.querySelector("#status").innerText=txt;
+const updateBTC=txt=>document.querySelector("#btc").innerText=txt;
+const updateProgress=(d,t)=>document.querySelector("#progress").innerText=`${d}/${t}`;
 function todayKey(){ const d=new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
-function checkNewDay(){ const k=todayKey(), saved=localStorage.getItem("mert_smart_day"); if(saved!==k){ localStorage.setItem("mert_smart_day",k); localStorage.setItem("mert_smart_signals","[]"); } }
-function getDailySignals(){ checkNewDay(); return JSON.parse(localStorage.getItem("mert_smart_signals")||"[]"); }
-function saveDailySignal(sig){
-  checkNewDay();
-  const list=getDailySignals();
-  const idx=list.findIndex(x=>x.coin===sig.coin && x.signal===sig.signal);
-  const payload={ time:new Date().toLocaleTimeString("tr-TR"), coin:sig.coin, signal:sig.signal, score:sig.score, entry:sig.entry, stop:sig.stop, tp2:sig.tp2, rr:sig.rr };
-  if(idx>=0){ if(sig.score>list[idx].score) list[idx]=payload; } else list.push(payload);
-  list.sort((a,b)=>b.score-a.score || b.rr-a.rr);
-  localStorage.setItem("mert_smart_signals", JSON.stringify(list));
-}
-function clearTodaySignals(){ localStorage.setItem("mert_smart_signals","[]"); renderDailySignals(); }
-function renderDailySignals(){
-  const list=getDailySignals();
-  document.querySelector("#dayCount").innerText = String(list.length);
-  document.querySelector("#dailyBody").innerHTML = list.map(x=>`
-    <tr>
-      <td>${x.time}</td>
-      <td><span class="sig ${x.signal}">${x.coin}</span></td>
-      <td><span class="sig ${x.signal}">${x.signal}</span></td>
-      <td>${x.score.toFixed(1)}</td>
-      <td>${fmt(x.entry)}</td>
-      <td>${fmt(x.stop)}</td>
-      <td>${fmt(x.tp2)}</td>
-      <td>${x.rr.toFixed(2)}</td>
-    </tr>`).join("") || `<tr><td colspan="8" class="muted">Bugün kayıt yok</td></tr>`;
-}
-
-function atrFromKlines(klines, period=14){
-  if(!Array.isArray(klines) || klines.length < period+2) return null;
-  const h=arrHigh(klines), l=arrLow(klines), c=arrClose(klines);
-  const trs=[];
-  for(let i=1;i<klines.length;i++) trs.push(Math.max(h[i]-l[i], Math.abs(h[i]-c[i-1]), Math.abs(l[i]-c[i-1])));
-  let atr=trs.slice(0,period).reduce((a,b)=>a+b,0)/period;
-  for(let i=period;i<trs.length;i++) atr=(atr*(period-1)+trs[i])/period;
-  return atr;
-}
-
+function checkNewDay(){ const k=todayKey(), s=localStorage.getItem("mert_prov2_day"); if(s!==k){ localStorage.setItem("mert_prov2_day",k); localStorage.setItem("mert_prov2_signals","[]"); } }
+function getDailySignals(){ checkNewDay(); return JSON.parse(localStorage.getItem("mert_prov2_signals")||"[]"); }
+function saveDailySignal(sig){ checkNewDay(); const list=getDailySignals(); const idx=list.findIndex(x=>x.coin===sig.coin&&x.signal===sig.signal); const payload={time:new Date().toLocaleTimeString("tr-TR"),coin:sig.coin,signal:sig.signal,score:sig.score,entry:sig.entry,stop:sig.stop,tp2:sig.tp2,rr:sig.rr}; if(idx>=0){ if(sig.score>list[idx].score) list[idx]=payload; } else list.push(payload); list.sort((a,b)=>b.score-a.score||b.rr-a.rr); localStorage.setItem("mert_prov2_signals",JSON.stringify(list)); }
+function clearTodaySignals(){ localStorage.setItem("mert_prov2_signals","[]"); renderDailySignals(); }
+function renderDailySignals(){ const list=getDailySignals(); document.querySelector("#dayCount").innerText=String(list.length); document.querySelector("#dailyBody").innerHTML=list.map(x=>`<tr><td>${x.time}</td><td><span class="sig ${x.signal}">${x.coin}</span></td><td><span class="sig ${x.signal}">${x.signal}</span></td><td>${x.score.toFixed(1)}</td><td>${fmt(x.entry)}</td><td>${fmt(x.stop)}</td><td>${fmt(x.tp2)}</td><td>${x.rr.toFixed(2)}</td></tr>`).join("")||`<tr><td colspan="8" class="muted">Bugün kayıt yok</td></tr>`; }
+function atrFromKlines(klines, period=14){ if(!Array.isArray(klines)||klines.length<period+2) return null; const h=arrHigh(klines),l=arrLow(klines),c=arrClose(klines),trs=[]; for(let i=1;i<klines.length;i++) trs.push(Math.max(h[i]-l[i],Math.abs(h[i]-c[i-1]),Math.abs(l[i]-c[i-1]))); let atr=trs.slice(0,period).reduce((a,b)=>a+b,0)/period; for(let i=period;i<trs.length;i++) atr=(atr*(period-1)+trs[i])/period; return atr; }
 async function getJSON(url){ const res=await fetch(url); return await res.json(); }
-async function getSymbols(limit){
-  const json=await getJSON(`${API}/fapi/v1/exchangeInfo`);
-  return json.symbols.filter(s=>s.contractType==="PERPETUAL" && s.quoteAsset==="USDT" && s.status==="TRADING").map(s=>s.symbol).slice(0,limit);
-}
+async function getSymbols(limit){ const json=await getJSON(`${API}/fapi/v1/exchangeInfo`); return json.symbols.filter(s=>s.contractType==="PERPETUAL"&&s.quoteAsset==="USDT"&&s.status==="TRADING").map(s=>s.symbol).slice(0,limit); }
 async function getKlines(symbol, interval, limit=140){ return await getJSON(`${API}/fapi/v1/klines?symbol=${symbol}&interval=${interval}&limit=${limit}`); }
-async function getBTCInfo(trendTf, htf){
-  try{
-    const [a,b]=await Promise.all([getKlines("BTCUSDT", trendTf), getKlines("BTCUSDT", htf)]);
-    const c1=arrClose(a), c2=arrClose(b);
-    if(c1.length<60 || c2.length<60) return {bias:"MIX", momentum:0};
-    const e1=ema(c1,20), e2=ema(c1,50), e3=ema(c2,20), e4=ema(c2,50);
-    const longBias=e1.at(-1)>e2.at(-1) && e3.at(-1)>e4.at(-1);
-    const shortBias=e1.at(-1)<e2.at(-1) && e3.at(-1)<e4.at(-1);
-    const momentum=Math.abs(c1.at(-1)-c1.at(-5))/c1.at(-5)*100;
-    return {bias: longBias ? "LONG" : shortBias ? "SHORT" : "MIX", momentum};
-  }catch{
-    return {bias:"MIX", momentum:0};
-  }
-}
-
+async function getBTCInfo(trendTf, htf){ try{ const [a,b]=await Promise.all([getKlines("BTCUSDT",trendTf),getKlines("BTCUSDT",htf)]); const c1=arrClose(a), c2=arrClose(b); if(c1.length<60||c2.length<60) return {bias:"MIX",momentum:0}; const e1=ema(c1,20),e2=ema(c1,50),e3=ema(c2,20),e4=ema(c2,50); const longBias=e1.at(-1)>e2.at(-1)&&e3.at(-1)>e4.at(-1); const shortBias=e1.at(-1)<e2.at(-1)&&e3.at(-1)<e4.at(-1); const momentum=Math.abs(c1.at(-1)-c1.at(-5))/c1.at(-5)*100; return {bias:longBias?"LONG":shortBias?"SHORT":"MIX",momentum}; }catch{ return {bias:"MIX",momentum:0}; } }
 async function scanCoin(symbol, entryTf, trendTf, htf, minScore, btcInfo){
   try{
-    const [entry, trend, higher] = await Promise.all([getKlines(symbol, entryTf), getKlines(symbol, trendTf), getKlines(symbol, htf)]);
+    const [entry,trend,higher]=await Promise.all([getKlines(symbol,entryTf),getKlines(symbol,trendTf),getKlines(symbol,htf)]);
     const ec=arrClose(entry), eo=arrOpen(entry), eh=arrHigh(entry), el=arrLow(entry), ev=arrVol(entry);
     const tc=arrClose(trend), hc=arrClose(higher);
-    if(ec.length<90 || tc.length<90 || hc.length<90 || ev.length<30) return null;
-    if(btcInfo.bias==="MIX" || btcInfo.momentum < 0.15) return null;
-
-    const e20=ema(ec,20), e50=ema(ec,50), t20=ema(tc,20), t50=ema(tc,50), h20=ema(hc,20), h50=ema(hc,50);
-    const atr=atrFromKlines(entry,14);
-    if(!atr) return null;
-
+    if(ec.length<95||tc.length<95||hc.length<95||ev.length<35) return null;
+    if(btcInfo.bias==="MIX"||btcInfo.momentum<0.15) return null;
+    const e20=ema(ec,20), t20=ema(tc,20), t50=ema(tc,50), h20=ema(hc,20), h50=ema(hc,50);
+    const atr=atrFromKlines(entry,14); if(!atr) return null;
     const close=ec.at(-1), open=eo.at(-1), high=eh.at(-1), low=el.at(-1);
-    const prevClose=ec.at(-2), prevOpen=eo.at(-2), prevHigh=eh.at(-2), prevLow=el.at(-2);
+    const pClose=ec.at(-2), pOpen=eo.at(-2), pHigh=eh.at(-2), pLow=el.at(-2);
     const avgVol=ev.slice(-21,-1).reduce((a,b)=>a+b,0)/20;
-    const volumeSpike=ev.at(-1) > avgVol * 1.5;
-    if(!volumeSpike) return null;
-
-    const atrPct=atr/close*100;
-    if(atrPct < 0.22) return null;
-
-    const trendLong=t20.at(-1)>t50.at(-1) && h20.at(-1)>h50.at(-1);
-    const trendShort=t20.at(-1)<t50.at(-1) && h20.at(-1)<h50.at(-1);
-
-    const recentHigh=Math.max(...eh.slice(-16,-1));
-    const recentLow=Math.min(...el.slice(-16,-1));
-
-    const sweepLong = low < recentLow && close > recentLow;
-    const sweepShort = high > recentHigh && close < recentHigh;
-
-    const range=Math.max(high-low, 0.0000001);
-    const body=Math.abs(close-open);
-    const upperWick=high-Math.max(open,close);
-    const lowerWick=Math.min(open,close)-low;
-    const bodyRatio=body/range;
-
-    const confirmLong = close > open && bodyRatio >= 0.45 && upperWick <= range * 0.25;
-    const confirmShort = close < open && bodyRatio >= 0.45 && lowerWick <= range * 0.25;
-
-    const reclaimLong = close > e20.at(-1) && low <= e20.at(-1) * 1.002;
-    const reclaimShort = close < e20.at(-1) && high >= e20.at(-1) * 0.998;
-
-    const nearEma = Math.abs(close - e20.at(-1)) / close * 100 <= 0.35;
-    const noFakeLong = upperWick <= range * 0.30;
-    const noFakeShort = lowerWick <= range * 0.30;
-
-    let longScore=0;
-    longScore += trendLong ? 3 : 0;
-    longScore += btcInfo.bias==="LONG" ? 2 : 0;
-    longScore += sweepLong ? 2 : 0;
-    longScore += reclaimLong ? 1.5 : 0;
-    longScore += confirmLong ? 1.5 : 0;
-    longScore += nearEma ? 1 : 0;
-    longScore += noFakeLong ? 1 : 0;
-    longScore += volumeSpike ? 1 : 0;
-
-    let shortScore=0;
-    shortScore += trendShort ? 3 : 0;
-    shortScore += btcInfo.bias==="SHORT" ? 2 : 0;
-    shortScore += sweepShort ? 2 : 0;
-    shortScore += reclaimShort ? 1.5 : 0;
-    shortScore += confirmShort ? 1.5 : 0;
-    shortScore += nearEma ? 1 : 0;
-    shortScore += noFakeShort ? 1 : 0;
-    shortScore += volumeSpike ? 1 : 0;
-
-    if(longScore >= minScore && trendLong && btcInfo.bias==="LONG" && sweepLong && reclaimLong && confirmLong && nearEma && noFakeLong){
-      const entryPrice=close;
-      const stop=recentLow - atr*0.6;
-      const tp1=entryPrice + (entryPrice-stop)*1.2;
-      const tp2=entryPrice + (entryPrice-stop)*2.2;
-      const rr=(tp2-entryPrice)/(entryPrice-stop);
-      if(rr < 2.0) return null;
-      return {coin:symbol, signal:"AL", score:longScore, entry:entryPrice, stop, tp1, tp2, rr, note:"Sweep + reclaim + confirm", raw:{close, e20:e20.at(-1), atr}};
+    const volumeSpike=Math.max(ev.at(-1),ev.at(-2))>avgVol*1.35; if(!volumeSpike) return null;
+    const atrPct=atr/close*100; if(atrPct<0.20) return null;
+    const trendLong=t20.at(-1)>t50.at(-1)&&h20.at(-1)>h50.at(-1);
+    const trendShort=t20.at(-1)<t50.at(-1)&&h20.at(-1)<h50.at(-1);
+    const recentHigh=Math.max(...eh.slice(-18,-3)), recentLow=Math.min(...el.slice(-18,-3));
+    const prevSweepLong=pLow<recentLow&&pClose>recentLow;
+    const prevSweepShort=pHigh>recentHigh&&pClose<recentHigh;
+    const range=Math.max(high-low,0.0000001), body=Math.abs(close-open), upperWick=high-Math.max(open,close), lowerWick=Math.min(open,close)-low, bodyRatio=body/range;
+    const confirmLong=close>open&&bodyRatio>=0.35&&upperWick<=range*0.35;
+    const confirmShort=close<open&&bodyRatio>=0.35&&lowerWick<=range*0.35;
+    const reclaimLong=close>recentLow&&close>e20.at(-1)&&low<=e20.at(-1)*1.003;
+    const reclaimShort=close<recentHigh&&close<e20.at(-1)&&high>=e20.at(-1)*0.997;
+    const nearEma=Math.abs(close-e20.at(-1))/close*100<=0.45;
+    const noFakeLong=upperWick<=range*0.38, noFakeShort=lowerWick<=range*0.38;
+    let longScore=0; longScore+=trendLong?3:0; longScore+=btcInfo.bias==="LONG"?2:0; longScore+=prevSweepLong?2:0; longScore+=reclaimLong?1.5:0; longScore+=confirmLong?1.5:0; longScore+=nearEma?1:0; longScore+=noFakeLong?1:0; longScore+=volumeSpike?1:0;
+    let shortScore=0; shortScore+=trendShort?3:0; shortScore+=btcInfo.bias==="SHORT"?2:0; shortScore+=prevSweepShort?2:0; shortScore+=reclaimShort?1.5:0; shortScore+=confirmShort?1.5:0; shortScore+=nearEma?1:0; shortScore+=noFakeShort?1:0; shortScore+=volumeSpike?1:0;
+    if(longScore>=minScore&&trendLong&&btcInfo.bias==="LONG"&&prevSweepLong&&reclaimLong&&confirmLong&&nearEma&&noFakeLong){
+      const entryPrice=close, stop=Math.min(pLow,recentLow)-atr*0.45, tp1=entryPrice+(entryPrice-stop)*1.2, tp2=entryPrice+(entryPrice-stop)*2.0, rr=(tp2-entryPrice)/(entryPrice-stop);
+      if(rr<2.0) return null;
+      return {coin:symbol,signal:"AL",score:longScore,entry:entryPrice,stop,tp1,tp2,rr,note:"Prev sweep + confirm"};
     }
-
-    if(shortScore >= minScore && trendShort && btcInfo.bias==="SHORT" && sweepShort && reclaimShort && confirmShort && nearEma && noFakeShort){
-      const entryPrice=close;
-      const stop=recentHigh + atr*0.6;
-      const tp1=entryPrice - (stop-entryPrice)*1.2;
-      const tp2=entryPrice - (stop-entryPrice)*2.2;
-      const rr=(entryPrice-tp2)/(stop-entryPrice);
-      if(rr < 2.0) return null;
-      return {coin:symbol, signal:"SAT", score:shortScore, entry:entryPrice, stop, tp1, tp2, rr, note:"Sweep + reclaim + confirm", raw:{close, e20:e20.at(-1), atr}};
+    if(shortScore>=minScore&&trendShort&&btcInfo.bias==="SHORT"&&prevSweepShort&&reclaimShort&&confirmShort&&nearEma&&noFakeShort){
+      const entryPrice=close, stop=Math.max(pHigh,recentHigh)+atr*0.45, tp1=entryPrice-(stop-entryPrice)*1.2, tp2=entryPrice-(stop-entryPrice)*2.0, rr=(entryPrice-tp2)/(stop-entryPrice);
+      if(rr<2.0) return null;
+      return {coin:symbol,signal:"SAT",score:shortScore,entry:entryPrice,stop,tp1,tp2,rr,note:"Prev sweep + confirm"};
     }
-
     return null;
-  }catch{
-    return null;
-  }
+  }catch{ return null; }
 }
-
-function renderSignal(sig){
-  const body=document.querySelector("#signalBody");
-  if(!sig){ body.innerHTML=`<tr><td colspan="9" class="muted">Sinyal yok</td></tr>`; return; }
-  body.innerHTML=`<tr>
-    <td><span class="sig ${sig.signal}">${sig.coin}</span></td>
-    <td><span class="sig ${sig.signal}">${sig.signal}</span></td>
-    <td class="${sig.score>=10?'ok':'warn'}">${sig.score.toFixed(1)}</td>
-    <td>${fmt(sig.entry)}</td>
-    <td>${fmt(sig.stop)}</td>
-    <td>${fmt(sig.tp1)}</td>
-    <td>${fmt(sig.tp2)}</td>
-    <td>${sig.rr.toFixed(2)}</td>
-    <td>${sig.note}</td>
-  </tr>`;
-}
-function renderDecision(sig, btcInfo){
-  const title=document.querySelector("#entryDecision");
-  const reason=document.querySelector("#entryReason");
-  if(!sig){
-    title.innerHTML=`<span class="bad">GİRME</span>`;
-    reason.innerText = btcInfo.bias==="MIX" ? "BTC yönü MIX. Sistem bilinçli olarak işlem vermiyor." : "Sweep + reclaim + confirmation birlikte oluşmadı.";
-    document.querySelector("#decision").innerHTML=`<span class="bad">GİRME</span>`;
-    return;
-  }
-  const canEnter = sig.score>=9.5 && sig.rr>=2.0 && btcInfo.bias!=="MIX";
-  if(canEnter){
-    title.innerHTML=`<span class="ok">GİR</span>`;
-    reason.innerText=`${sig.coin} için ${sig.signal} sinyali onaylı. Giriş ${fmt(sig.entry)}, stop ${fmt(sig.stop)}, TP2 ${fmt(sig.tp2)}.`;
-    document.querySelector("#decision").innerHTML=`<span class="ok">GİR</span>`;
-  }else{
-    title.innerHTML=`<span class="warn">BEKLE</span>`;
-    reason.innerText=`Sinyal var ama giriş filtresi tam onay vermedi.`;
-    document.querySelector("#decision").innerHTML=`<span class="warn">BEKLE</span>`;
-  }
-}
-function renderSmartExit(sig){
-  const posState=document.querySelector("#posState");
-  const afterTp1=document.querySelector("#afterTp1");
-  const stopMgmt=document.querySelector("#stopMgmt");
-  const weaknessExit=document.querySelector("#weaknessExit");
-  const actionPlan=document.querySelector("#actionPlan");
-  const exitDecision=document.querySelector("#exitDecision");
-  const exitReason=document.querySelector("#exitReason");
-
-  if(!sig){
-    posState.innerText="-"; afterTp1.innerText="-"; stopMgmt.innerText="-"; weaknessExit.innerText="-"; actionPlan.innerText="-";
-    exitDecision.innerHTML=`<span class="bad">POZİSYON YOK</span>`;
-    exitReason.innerText="Sinyal geldiğinde burada TP1 sonrası ne yapılacağı ve erken çıkış planı gösterilir.";
-    return;
-  }
-
-  posState.innerText = `${sig.signal} hazırlık`;
-  afterTp1.innerText = "Stop → Entry";
-  stopMgmt.innerText = `BE @ ${fmt(sig.entry)}`;
-  weaknessExit.innerText = sig.signal === "AL" ? "E20 altı kapanışta çık" : "E20 üstü kapanışta çık";
-  actionPlan.innerText = "TP1 %50 / TP2 kalan";
-  exitDecision.innerHTML = `<span class="ok">AKILLI ÇIKIŞ AKTİF</span>`;
-  exitReason.innerText = `Plan: TP1 görüldüğünde pozisyonun yarısını kapat, stop'u entry'ye çek. Güç kaybı olursa TP2 beklemeden çık.`;
-}
-function alarm(sig){
-  if(!sig) return;
-  const key=`${sig.coin}|${sig.signal}|${sig.score.toFixed(1)}|${fmt(sig.entry)}`;
-  if(lastAlarmKey===key) return;
-  lastAlarmKey=key;
-  const banner=document.querySelector("#alarmBanner");
-  banner.style.display="block";
-  banner.innerText=`Yeni sweep sinyali: ${sig.coin} ${sig.signal} | Giriş ${fmt(sig.entry)} | Stop ${fmt(sig.stop)} | TP2 ${fmt(sig.tp2)} | RR ${sig.rr.toFixed(2)}`;
-}
-
-async function scanAll(){
-  if(isScanning) return;
-  isScanning=true;
-  checkNewDay();
-
-  const total=parseInt(document.querySelector("#scanCount").value,10);
-  const entryTf=document.querySelector("#entryTf").value;
-  const trendTf=document.querySelector("#trendTf").value;
-  const htf=document.querySelector("#htf").value;
-  const minScore=parseFloat(document.querySelector("#minScore").value);
-
-  updateStatus("Taranıyor...");
-  updateProgress(0,total);
-  renderSignal(null);
-  renderSmartExit(null);
-
-  const btcInfo=await getBTCInfo(trendTf, htf);
-  updateBTC(`${btcInfo.bias} | Mom ${btcInfo.momentum.toFixed(2)}%`);
-
-  const symbols=await getSymbols(total);
-  const chunkSize=8;
-  const results=[];
-  let scanned=0;
-
-  for(let i=0;i<symbols.length;i+=chunkSize){
-    const batch=symbols.slice(i,i+chunkSize);
-    const out=await Promise.all(batch.map(s=>scanCoin(s, entryTf, trendTf, htf, minScore, btcInfo)));
-    out.forEach(x=>{ if(x) results.push(x); });
-    scanned += batch.length;
-    updateProgress(scanned,total);
-    await sleep(120);
-  }
-
-  results.sort((a,b)=>b.score-a.score || b.rr-a.rr);
-  const best=results[0]||null;
-
-  renderSignal(best);
-  renderDecision(best, btcInfo);
-  renderSmartExit(best);
-  if(best) saveDailySignal(best);
-  renderDailySignals();
-  alarm(best);
-
-  updateStatus("Hazır");
-  document.querySelector("#lastUpdate").innerText = "Son güncelleme: " + new Date().toLocaleTimeString("tr-TR");
-  isScanning=false;
-}
-
-function resetTimer(){
-  if(timer) clearInterval(timer);
-  const sec=parseInt(document.querySelector("#refreshSec").value,10);
-  timer=setInterval(scanAll, sec*1000);
-}
-
+function renderSignal(sig){ const body=document.querySelector("#signalBody"); if(!sig){ body.innerHTML=`<tr><td colspan="9" class="muted">Sinyal yok</td></tr>`; return; } body.innerHTML=`<tr><td><span class="sig ${sig.signal}">${sig.coin}</span></td><td><span class="sig ${sig.signal}">${sig.signal}</span></td><td class="${sig.score>=10?'ok':'warn'}">${sig.score.toFixed(1)}</td><td>${fmt(sig.entry)}</td><td>${fmt(sig.stop)}</td><td>${fmt(sig.tp1)}</td><td>${fmt(sig.tp2)}</td><td>${sig.rr.toFixed(2)}</td><td>${sig.note}</td></tr>`; }
+function renderDecision(sig, btcInfo){ const title=document.querySelector("#entryDecision"), reason=document.querySelector("#entryReason"); if(!sig){ title.innerHTML=`<span class="bad">GİRME</span>`; reason.innerText=btcInfo.bias==="MIX"?"BTC yönü MIX. Sistem bilinçli olarak işlem vermiyor.":"Önceki mum sweep yapıp sonraki mum onay vermedi."; document.querySelector("#decision").innerHTML=`<span class="bad">GİRME</span>`; return; } const canEnter=sig.score>=9.5&&sig.rr>=2.0&&btcInfo.bias!=="MIX"; if(canEnter){ title.innerHTML=`<span class="ok">GİR</span>`; reason.innerText=`${sig.coin} için ${sig.signal} sinyali onaylı. Giriş ${fmt(sig.entry)}, stop ${fmt(sig.stop)}, TP2 ${fmt(sig.tp2)}.`; document.querySelector("#decision").innerHTML=`<span class="ok">GİR</span>`; } else { title.innerHTML=`<span class="warn">BEKLE</span>`; reason.innerText=`Sinyal var ama giriş filtresi tam onay vermedi.`; document.querySelector("#decision").innerHTML=`<span class="warn">BEKLE</span>`; } }
+function renderSmartExit(sig){ const posState=document.querySelector("#posState"), afterTp1=document.querySelector("#afterTp1"), stopMgmt=document.querySelector("#stopMgmt"), weaknessExit=document.querySelector("#weaknessExit"), actionPlan=document.querySelector("#actionPlan"), exitDecision=document.querySelector("#exitDecision"), exitReason=document.querySelector("#exitReason"); if(!sig){ posState.innerText="-"; afterTp1.innerText="-"; stopMgmt.innerText="-"; weaknessExit.innerText="-"; actionPlan.innerText="-"; exitDecision.innerHTML=`<span class="bad">POZİSYON YOK</span>`; exitReason.innerText="Sinyal geldiğinde akıllı çıkış planı burada oluşur."; return; } posState.innerText=`${sig.signal} hazırlık`; afterTp1.innerText="Stop → Entry"; stopMgmt.innerText=`BE @ ${fmt(sig.entry)}`; weaknessExit.innerText=sig.signal==="AL"?"Zayıf kapanışta çık":"Ters güçlü kapanışta çık"; actionPlan.innerText="TP1 %50 / TP2 kalan"; exitDecision.innerHTML=`<span class="ok">AKILLI ÇIKIŞ AKTİF</span>`; exitReason.innerText=`Plan: TP1 görüldüğünde yarısını kapat, stop'u entry'ye çek. Güç kaybında TP2 beklemeden çık.`; }
+function alarm(sig){ if(!sig) return; const key=`${sig.coin}|${sig.signal}|${sig.score.toFixed(1)}|${fmt(sig.entry)}`; if(lastAlarmKey===key) return; lastAlarmKey=key; const banner=document.querySelector("#alarmBanner"); banner.style.display="block"; banner.innerText=`Yeni Pro V2 sinyal: ${sig.coin} ${sig.signal} | Giriş ${fmt(sig.entry)} | Stop ${fmt(sig.stop)} | TP2 ${fmt(sig.tp2)} | RR ${sig.rr.toFixed(2)}`; }
+async function scanAll(){ if(isScanning) return; isScanning=true; checkNewDay(); const total=parseInt(document.querySelector("#scanCount").value,10), entryTf=document.querySelector("#entryTf").value, trendTf=document.querySelector("#trendTf").value, htf=document.querySelector("#htf").value, minScore=parseFloat(document.querySelector("#minScore").value); updateStatus("Taranıyor..."); updateProgress(0,total); renderSignal(null); renderSmartExit(null); const btcInfo=await getBTCInfo(trendTf,htf); updateBTC(`${btcInfo.bias} | Mom ${btcInfo.momentum.toFixed(2)}%`); const symbols=await getSymbols(total), chunkSize=8, results=[]; let scanned=0; for(let i=0;i<symbols.length;i+=chunkSize){ const batch=symbols.slice(i,i+chunkSize); const out=await Promise.all(batch.map(s=>scanCoin(s,entryTf,trendTf,htf,minScore,btcInfo))); out.forEach(x=>{if(x) results.push(x)}); scanned+=batch.length; updateProgress(scanned,total); await sleep(120); } results.sort((a,b)=>b.score-a.score||b.rr-a.rr); const best=results[0]||null; renderSignal(best); renderDecision(best,btcInfo); renderSmartExit(best); if(best) saveDailySignal(best); renderDailySignals(); alarm(best); updateStatus("Hazır"); document.querySelector("#lastUpdate").innerText="Son güncelleme: "+new Date().toLocaleTimeString("tr-TR"); isScanning=false; }
+function resetTimer(){ if(timer) clearInterval(timer); const sec=parseInt(document.querySelector("#refreshSec").value,10); timer=setInterval(scanAll, sec*1000); }
 document.querySelector("#refreshSec").addEventListener("change", resetTimer);
 renderDailySignals();
-window.addEventListener("load", () => {
-  setTimeout(() => { scanAll(); resetTimer(); }, 400);
-});
+window.addEventListener("load",()=>{ setTimeout(()=>{ scanAll(); resetTimer(); },400); });
 </script>
 </body>
 </html>
