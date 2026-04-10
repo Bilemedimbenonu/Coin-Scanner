@@ -3,35 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mert Scanner Pro Mode V2</title>
+<title>Mert Scanner V6 Full</title>
 <style>
 :root{--bg:#0b1020;--panel:#121934;--line:#263052;--text:#eef2ff;--muted:#9aa4c7;--green:#1f9d55;--red:#d64545;--amber:#d99a1a;--blue:#274690}
-*{box-sizing:border-box}
-body{margin:0;background:linear-gradient(180deg,#0b1020,#0a0f1d);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
-.wrap{max-width:1400px;margin:0 auto;padding:14px}
-.top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
-.title{font-size:22px;font-weight:700}.sub{font-size:12px;color:var(--muted)}
-.controls{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
-.card,.stat,.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px}.card{padding:10px}
-.control{display:flex;flex-direction:column;gap:6px;min-width:120px}label{font-size:12px;color:var(--muted)}
-select,button{padding:10px;border-radius:10px;border:1px solid var(--line);background:#0f1530;color:var(--text)}
-button{background:var(--blue);border:none;font-weight:700}
-.secondary{background:#1a2344}
-.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:12px}.stat{padding:10px}
-.k{font-size:12px;color:var(--muted)}.v{font-size:22px;font-weight:700;margin-top:4px}
-.grid{display:grid;grid-template-columns:1fr;gap:12px}.panel{overflow:auto}.panel h3{margin:0;padding:12px;border-bottom:1px solid var(--line)}
-.toolbar{display:flex;gap:10px;align-items:center;padding:10px 12px;border-bottom:1px solid var(--line);flex-wrap:wrap}
-table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
-th{position:sticky;top:0;background:var(--panel);color:var(--muted)}
-.sig{font-weight:700;padding:4px 8px;border-radius:999px;display:inline-block;font-size:12px}
-.AL{background:rgba(31,157,85,.18);color:#78f0a8}.SAT{background:rgba(214,69,69,.18);color:#ff9b9b}
-.ok{color:#78f0a8;font-weight:700}.bad{color:#ff9b9b;font-weight:700}.warn{color:#ffd079;font-weight:700}.muted{color:var(--muted)}
-.badge{display:inline-block;padding:4px 8px;border-radius:999px;background:rgba(39,70,144,.25);color:#c9d5ff;font-size:12px}
-.banner{display:none;margin:0 0 12px 0;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:#1a2344}
-.info{padding:12px 14px}.big{font-size:18px;font-weight:700}.small{font-size:12px;color:var(--muted)}
-.exitgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
-.exititem{background:#0f1530;border:1px solid var(--line);border-radius:10px;padding:10px}
-.exitlabel{font-size:12px;color:var(--muted);margin-bottom:6px}.exitvalue{font-size:18px;font-weight:700}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#0b1020,#0a0f1d);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+.wrap{max-width:1400px;margin:0 auto;padding:14px}.top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}.title{font-size:22px;font-weight:700}.sub{font-size:12px;color:var(--muted)}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}.card,.stat,.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px}.card{padding:10px}.control{display:flex;flex-direction:column;gap:6px;min-width:120px}label{font-size:12px;color:var(--muted)}
+select,button,input{padding:10px;border-radius:10px;border:1px solid var(--line);background:#0f1530;color:var(--text)}button{background:var(--blue);border:none;font-weight:700}.secondary{background:#1a2344}.danger{background:#6b1f2a}
+.stats{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin-bottom:12px}.stat{padding:10px}.k{font-size:12px;color:var(--muted)}.v{font-size:22px;font-weight:700;margin-top:4px}
+.grid{display:grid;grid-template-columns:1fr;gap:12px}.panel{overflow:auto}.panel h3{margin:0;padding:12px;border-bottom:1px solid var(--line)}.toolbar{display:flex;gap:10px;align-items:center;padding:10px 12px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}th{position:sticky;top:0;background:var(--panel);color:var(--muted)}
+.sig{font-weight:700;padding:4px 8px;border-radius:999px;display:inline-block;font-size:12px}.AL{background:rgba(31,157,85,.18);color:#78f0a8}.SAT{background:rgba(214,69,69,.18);color:#ff9b9b}.ok{color:#78f0a8;font-weight:700}.bad{color:#ff9b9b;font-weight:700}.warn{color:#ffd079;font-weight:700}.muted{color:var(--muted)}.badge{display:inline-block;padding:4px 8px;border-radius:999px;background:rgba(39,70,144,.25);color:#c9d5ff;font-size:12px}
+.banner{display:none;margin:0 0 12px 0;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:#1a2344}.info{padding:12px 14px}.big{font-size:18px;font-weight:700}.small{font-size:12px;color:var(--muted)}
+.exitgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.exititem{background:#0f1530;border:1px solid var(--line);border-radius:10px;padding:10px}.exitlabel{font-size:12px;color:var(--muted);margin-bottom:6px}.exitvalue{font-size:18px;font-weight:700}
 @media (max-width:1150px){.stats{grid-template-columns:repeat(2,1fr)} .exitgrid{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
@@ -39,11 +23,12 @@ th{position:sticky;top:0;background:var(--panel);color:var(--muted)}
 <div class="wrap">
   <div class="top">
     <div>
-      <div class="title">Mert Scanner Pro Mode V2</div>
-      <div class="sub">Multi-candle sweep mantığı: sweep önceki mumda, reclaim/confirm sonraki mumda. Daha verimli, ama hâlâ seçici.</div>
+      <div class="title">Mert Scanner V6 Full</div>
+      <div class="sub">Signal Lock + RSI + ATR + multi-candle sweep + Hybrid TP + Smart Exit + günlük liste.</div>
     </div>
     <div class="sub" id="lastUpdate">Hazır</div>
   </div>
+
   <div id="alarmBanner" class="banner"></div>
 
   <div class="controls">
@@ -61,16 +46,21 @@ th{position:sticky;top:0;background:var(--panel);color:var(--muted)}
     <div class="stat"><div class="k">BTC yönü</div><div class="v" style="font-size:15px" id="btc">-</div></div>
     <div class="stat"><div class="k">Durum</div><div class="v" style="font-size:15px" id="status">Bekliyor</div></div>
     <div class="stat"><div class="k">Karar</div><div class="v" style="font-size:18px" id="decision">Bekliyor</div></div>
+    <div class="stat"><div class="k">Signal Lock</div><div class="v" style="font-size:15px" id="lockState">Kapalı</div></div>
     <div class="stat"><div class="k">Smart Exit</div><div class="v" style="font-size:15px" id="exitDecision">Bekliyor</div></div>
     <div class="stat"><div class="k">Bugünkü kayıt</div><div class="v" id="dayCount">0</div></div>
   </div>
 
   <div class="grid">
     <div class="panel">
-      <h3>Sinyal</h3>
+      <div class="toolbar">
+        <h3 style="margin:0;padding:0;border:none">Aktif Trade</h3>
+        <span class="badge">Signal lock aktifken sinyal kaybolmaz</span>
+        <button class="secondary" onclick="forceUnlockTrade()">Lock Kaldır</button>
+      </div>
       <table>
-        <thead><tr><th>Coin</th><th>Yön</th><th>Skor</th><th>Giriş</th><th>Stop</th><th>TP1</th><th>TP2</th><th>RR</th><th>Not</th></tr></thead>
-        <tbody id="signalBody"></tbody>
+        <thead><tr><th>Coin</th><th>Yön</th><th>Skor</th><th>Entry</th><th>Stop</th><th>TP1</th><th>TP2</th><th>RR</th><th>Durum</th></tr></thead>
+        <tbody id="activeBody"></tbody>
       </table>
     </div>
 
@@ -101,23 +91,25 @@ th{position:sticky;top:0;background:var(--panel);color:var(--muted)}
         <h3 style="margin:0;padding:0;border:none">Bugünün Sinyalleri</h3>
         <span class="badge">Yeni günün ilk taramasında otomatik temizlenir</span>
         <button class="secondary" onclick="renderDailySignals()">Yenile</button>
-        <button class="secondary" onclick="clearTodaySignals()">Bugünü Temizle</button>
+        <button class="danger" onclick="clearTodaySignals()">Bugünü Temizle</button>
       </div>
       <table>
-        <thead><tr><th>Saat</th><th>Coin</th><th>Yön</th><th>Skor</th><th>Giriş</th><th>Stop</th><th>TP2</th><th>RR</th></tr></thead>
+        <thead><tr><th>Saat</th><th>Coin</th><th>Yön</th><th>Skor</th><th>Entry</th><th>Stop</th><th>TP2</th><th>RR</th></tr></thead>
         <tbody id="dailyBody"></tbody>
       </table>
     </div>
   </div>
 
-  <div class="footer">V2 farkı: sweep + reclaim + confirmation aynı mumda aranmaz. Önceki mum sweep yapar, son mum onay verir. Bu genelde daha verimlidir.</div>
+  <div class="footer">V6: önceki mum sweep, son mum onay. RSI filtresi, ATR filtresi ve Hybrid TP var. TP1 = 1R, TP2 = 2.5R. TP1 sonrası stop entry'ye çekilir.</div>
 </div>
 
 <script>
 const API = "https://fapi.binance.com";
 let isScanning = false, timer = null, lastAlarmKey = null;
-const fmt=n=>n==null||Number.isNaN(n)?"-":Math.abs(n)>=1000?n.toFixed(2):Math.abs(n)>=1?n.toFixed(4):n.toFixed(6);
+
+const fmt = n => n == null || Number.isNaN(n) ? "-" : Math.abs(n) >= 1000 ? n.toFixed(2) : Math.abs(n) >= 1 ? n.toFixed(4) : n.toFixed(6);
 function ema(values,p){ const k=2/(p+1); let prev=values[0]; const out=[prev]; for(let i=1;i<values.length;i++){ prev=values[i]*k+prev*(1-k); out.push(prev);} return out; }
+function rsi(values, period=14){ if(!values || values.length < period+1) return null; let gains=0, losses=0; for(let i=1;i<=period;i++){ const ch=values[i]-values[i-1]; if(ch>=0) gains+=ch; else losses-=ch; } let avgGain=gains/period, avgLoss=losses/period; for(let i=period+1;i<values.length;i++){ const ch=values[i]-values[i-1]; const gain=Math.max(ch,0), loss=Math.max(-ch,0); avgGain=(avgGain*(period-1)+gain)/period; avgLoss=(avgLoss*(period-1)+loss)/period; } if(avgLoss===0) return 100; const rs=avgGain/avgLoss; return 100-(100/(1+rs)); }
 const arrClose=a=>Array.isArray(a)?a.map(x=>parseFloat(x[4])):[];
 const arrOpen=a=>Array.isArray(a)?a.map(x=>parseFloat(x[1])):[];
 const arrHigh=a=>Array.isArray(a)?a.map(x=>parseFloat(x[2])):[];
@@ -127,17 +119,38 @@ const sleep=ms=>new Promise(res=>setTimeout(res,ms));
 const updateStatus=txt=>document.querySelector("#status").innerText=txt;
 const updateBTC=txt=>document.querySelector("#btc").innerText=txt;
 const updateProgress=(d,t)=>document.querySelector("#progress").innerText=`${d}/${t}`;
+
 function todayKey(){ const d=new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
-function checkNewDay(){ const k=todayKey(), s=localStorage.getItem("mert_prov2_day"); if(s!==k){ localStorage.setItem("mert_prov2_day",k); localStorage.setItem("mert_prov2_signals","[]"); } }
-function getDailySignals(){ checkNewDay(); return JSON.parse(localStorage.getItem("mert_prov2_signals")||"[]"); }
-function saveDailySignal(sig){ checkNewDay(); const list=getDailySignals(); const idx=list.findIndex(x=>x.coin===sig.coin&&x.signal===sig.signal); const payload={time:new Date().toLocaleTimeString("tr-TR"),coin:sig.coin,signal:sig.signal,score:sig.score,entry:sig.entry,stop:sig.stop,tp2:sig.tp2,rr:sig.rr}; if(idx>=0){ if(sig.score>list[idx].score) list[idx]=payload; } else list.push(payload); list.sort((a,b)=>b.score-a.score||b.rr-a.rr); localStorage.setItem("mert_prov2_signals",JSON.stringify(list)); }
-function clearTodaySignals(){ localStorage.setItem("mert_prov2_signals","[]"); renderDailySignals(); }
+function checkNewDay(){ const k=todayKey(), s=localStorage.getItem("mert_v6_day"); if(s!==k){ localStorage.setItem("mert_v6_day",k); localStorage.setItem("mert_v6_signals","[]"); localStorage.removeItem("mert_v6_active_trade"); } }
+function getDailySignals(){ checkNewDay(); return JSON.parse(localStorage.getItem("mert_v6_signals")||"[]"); }
+function saveDailySignal(sig){ checkNewDay(); const list=getDailySignals(); const idx=list.findIndex(x=>x.coin===sig.coin&&x.signal===sig.signal); const payload={time:new Date().toLocaleTimeString("tr-TR"),coin:sig.coin,signal:sig.signal,score:sig.score,entry:sig.entry,stop:sig.stop,tp2:sig.tp2,rr:sig.rr}; if(idx>=0){ if(sig.score>list[idx].score) list[idx]=payload; } else list.push(payload); list.sort((a,b)=>b.score-a.score||b.rr-a.rr); localStorage.setItem("mert_v6_signals",JSON.stringify(list)); }
+function clearTodaySignals(){ localStorage.setItem("mert_v6_signals","[]"); renderDailySignals(); }
 function renderDailySignals(){ const list=getDailySignals(); document.querySelector("#dayCount").innerText=String(list.length); document.querySelector("#dailyBody").innerHTML=list.map(x=>`<tr><td>${x.time}</td><td><span class="sig ${x.signal}">${x.coin}</span></td><td><span class="sig ${x.signal}">${x.signal}</span></td><td>${x.score.toFixed(1)}</td><td>${fmt(x.entry)}</td><td>${fmt(x.stop)}</td><td>${fmt(x.tp2)}</td><td>${x.rr.toFixed(2)}</td></tr>`).join("")||`<tr><td colspan="8" class="muted">Bugün kayıt yok</td></tr>`; }
+
+function getActiveTrade(){ return JSON.parse(localStorage.getItem("mert_v6_active_trade")||"null"); }
+function setActiveTrade(trade){ localStorage.setItem("mert_v6_active_trade", JSON.stringify(trade)); }
+function clearActiveTrade(){ localStorage.removeItem("mert_v6_active_trade"); renderActiveTrade(); }
+function forceUnlockTrade(){ clearActiveTrade(); document.querySelector("#lockState").innerHTML='<span class="warn">Manuel açıldı</span>'; }
+
+function renderActiveTrade(){
+  const trade=getActiveTrade();
+  const body=document.querySelector("#activeBody");
+  if(!trade){
+    body.innerHTML=`<tr><td colspan="9" class="muted">Aktif trade yok</td></tr>`;
+    document.querySelector("#lockState").innerHTML='<span class="bad">Kapalı</span>';
+    return;
+  }
+  document.querySelector("#lockState").innerHTML='<span class="ok">Aktif</span>';
+  body.innerHTML=`<tr><td><span class="sig ${trade.signal}">${trade.coin}</span></td><td><span class="sig ${trade.signal}">${trade.signal}</span></td><td>${trade.score.toFixed(1)}</td><td>${fmt(trade.entry)}</td><td>${fmt(trade.stop)}</td><td>${fmt(trade.tp1)}</td><td>${fmt(trade.tp2)}</td><td>${trade.rr.toFixed(2)}</td><td>${trade.state||'Açık'}</td></tr>`;
+}
+
 function atrFromKlines(klines, period=14){ if(!Array.isArray(klines)||klines.length<period+2) return null; const h=arrHigh(klines),l=arrLow(klines),c=arrClose(klines),trs=[]; for(let i=1;i<klines.length;i++) trs.push(Math.max(h[i]-l[i],Math.abs(h[i]-c[i-1]),Math.abs(l[i]-c[i-1]))); let atr=trs.slice(0,period).reduce((a,b)=>a+b,0)/period; for(let i=period;i<trs.length;i++) atr=(atr*(period-1)+trs[i])/period; return atr; }
 async function getJSON(url){ const res=await fetch(url); return await res.json(); }
 async function getSymbols(limit){ const json=await getJSON(`${API}/fapi/v1/exchangeInfo`); return json.symbols.filter(s=>s.contractType==="PERPETUAL"&&s.quoteAsset==="USDT"&&s.status==="TRADING").map(s=>s.symbol).slice(0,limit); }
 async function getKlines(symbol, interval, limit=140){ return await getJSON(`${API}/fapi/v1/klines?symbol=${symbol}&interval=${interval}&limit=${limit}`); }
+async function getPrice(symbol){ const j=await getJSON(`${API}/fapi/v1/ticker/price?symbol=${symbol}`); return parseFloat(j.price); }
 async function getBTCInfo(trendTf, htf){ try{ const [a,b]=await Promise.all([getKlines("BTCUSDT",trendTf),getKlines("BTCUSDT",htf)]); const c1=arrClose(a), c2=arrClose(b); if(c1.length<60||c2.length<60) return {bias:"MIX",momentum:0}; const e1=ema(c1,20),e2=ema(c1,50),e3=ema(c2,20),e4=ema(c2,50); const longBias=e1.at(-1)>e2.at(-1)&&e3.at(-1)>e4.at(-1); const shortBias=e1.at(-1)<e2.at(-1)&&e3.at(-1)<e4.at(-1); const momentum=Math.abs(c1.at(-1)-c1.at(-5))/c1.at(-5)*100; return {bias:longBias?"LONG":shortBias?"SHORT":"MIX",momentum}; }catch{ return {bias:"MIX",momentum:0}; } }
+
 async function scanCoin(symbol, entryTf, trendTf, htf, minScore, btcInfo){
   try{
     const [entry,trend,higher]=await Promise.all([getKlines(symbol,entryTf),getKlines(symbol,trendTf),getKlines(symbol,htf)]);
@@ -145,18 +158,24 @@ async function scanCoin(symbol, entryTf, trendTf, htf, minScore, btcInfo){
     const tc=arrClose(trend), hc=arrClose(higher);
     if(ec.length<95||tc.length<95||hc.length<95||ev.length<35) return null;
     if(btcInfo.bias==="MIX"||btcInfo.momentum<0.15) return null;
+
     const e20=ema(ec,20), t20=ema(tc,20), t50=ema(tc,50), h20=ema(hc,20), h50=ema(hc,50);
     const atr=atrFromKlines(entry,14); if(!atr) return null;
+    const currentRsi=rsi(ec,14); if(currentRsi==null) return null;
+
     const close=ec.at(-1), open=eo.at(-1), high=eh.at(-1), low=el.at(-1);
     const pClose=ec.at(-2), pOpen=eo.at(-2), pHigh=eh.at(-2), pLow=el.at(-2);
+
     const avgVol=ev.slice(-21,-1).reduce((a,b)=>a+b,0)/20;
     const volumeSpike=Math.max(ev.at(-1),ev.at(-2))>avgVol*1.35; if(!volumeSpike) return null;
     const atrPct=atr/close*100; if(atrPct<0.20) return null;
+
     const trendLong=t20.at(-1)>t50.at(-1)&&h20.at(-1)>h50.at(-1);
     const trendShort=t20.at(-1)<t50.at(-1)&&h20.at(-1)<h50.at(-1);
     const recentHigh=Math.max(...eh.slice(-18,-3)), recentLow=Math.min(...el.slice(-18,-3));
     const prevSweepLong=pLow<recentLow&&pClose>recentLow;
     const prevSweepShort=pHigh>recentHigh&&pClose<recentHigh;
+
     const range=Math.max(high-low,0.0000001), body=Math.abs(close-open), upperWick=high-Math.max(open,close), lowerWick=Math.min(open,close)-low, bodyRatio=body/range;
     const confirmLong=close>open&&bodyRatio>=0.35&&upperWick<=range*0.35;
     const confirmShort=close<open&&bodyRatio>=0.35&&lowerWick<=range*0.35;
@@ -164,30 +183,132 @@ async function scanCoin(symbol, entryTf, trendTf, htf, minScore, btcInfo){
     const reclaimShort=close<recentHigh&&close<e20.at(-1)&&high>=e20.at(-1)*0.997;
     const nearEma=Math.abs(close-e20.at(-1))/close*100<=0.45;
     const noFakeLong=upperWick<=range*0.38, noFakeShort=lowerWick<=range*0.38;
-    let longScore=0; longScore+=trendLong?3:0; longScore+=btcInfo.bias==="LONG"?2:0; longScore+=prevSweepLong?2:0; longScore+=reclaimLong?1.5:0; longScore+=confirmLong?1.5:0; longScore+=nearEma?1:0; longScore+=noFakeLong?1:0; longScore+=volumeSpike?1:0;
-    let shortScore=0; shortScore+=trendShort?3:0; shortScore+=btcInfo.bias==="SHORT"?2:0; shortScore+=prevSweepShort?2:0; shortScore+=reclaimShort?1.5:0; shortScore+=confirmShort?1.5:0; shortScore+=nearEma?1:0; shortScore+=noFakeShort?1:0; shortScore+=volumeSpike?1:0;
-    if(longScore>=minScore&&trendLong&&btcInfo.bias==="LONG"&&prevSweepLong&&reclaimLong&&confirmLong&&nearEma&&noFakeLong){
-      const entryPrice=close, stop=Math.min(pLow,recentLow)-atr*0.45, tp1=entryPrice+(entryPrice-stop)*1.2, tp2=entryPrice+(entryPrice-stop)*2.0, rr=(tp2-entryPrice)/(entryPrice-stop);
+    const rsiLong=currentRsi>=40&&currentRsi<=65;
+    const rsiShort=currentRsi>=35&&currentRsi<=60;
+
+    let longScore=0; longScore+=trendLong?3:0; longScore+=btcInfo.bias==="LONG"?2:0; longScore+=prevSweepLong?2:0; longScore+=reclaimLong?1.5:0; longScore+=confirmLong?1.5:0; longScore+=nearEma?1:0; longScore+=noFakeLong?1:0; longScore+=volumeSpike?1:0; longScore+=rsiLong?1:0;
+    let shortScore=0; shortScore+=trendShort?3:0; shortScore+=btcInfo.bias==="SHORT"?2:0; shortScore+=prevSweepShort?2:0; shortScore+=reclaimShort?1.5:0; shortScore+=confirmShort?1.5:0; shortScore+=nearEma?1:0; shortScore+=noFakeShort?1:0; shortScore+=volumeSpike?1:0; shortScore+=rsiShort?1:0;
+
+    if(longScore>=minScore&&trendLong&&btcInfo.bias==="LONG"&&prevSweepLong&&reclaimLong&&confirmLong&&nearEma&&noFakeLong&&rsiLong){
+      const entryPrice=close, stop=Math.min(pLow,recentLow)-atr*0.45, risk=entryPrice-stop, tp1=entryPrice+risk*1.0, tp2=entryPrice+risk*2.5, rr=(tp2-entryPrice)/risk;
       if(rr<2.0) return null;
-      return {coin:symbol,signal:"AL",score:longScore,entry:entryPrice,stop,tp1,tp2,rr,note:"Prev sweep + confirm"};
+      return {coin:symbol,signal:"AL",score:longScore,entry:entryPrice,stop,tp1,tp2,rr,note:"Prev sweep + confirm + RSI"};
     }
-    if(shortScore>=minScore&&trendShort&&btcInfo.bias==="SHORT"&&prevSweepShort&&reclaimShort&&confirmShort&&nearEma&&noFakeShort){
-      const entryPrice=close, stop=Math.max(pHigh,recentHigh)+atr*0.45, tp1=entryPrice-(stop-entryPrice)*1.2, tp2=entryPrice-(stop-entryPrice)*2.0, rr=(entryPrice-tp2)/(stop-entryPrice);
+    if(shortScore>=minScore&&trendShort&&btcInfo.bias==="SHORT"&&prevSweepShort&&reclaimShort&&confirmShort&&nearEma&&noFakeShort&&rsiShort){
+      const entryPrice=close, stop=Math.max(pHigh,recentHigh)+atr*0.45, risk=stop-entryPrice, tp1=entryPrice-risk*1.0, tp2=entryPrice-risk*2.5, rr=(entryPrice-tp2)/risk;
       if(rr<2.0) return null;
-      return {coin:symbol,signal:"SAT",score:shortScore,entry:entryPrice,stop,tp1,tp2,rr,note:"Prev sweep + confirm"};
+      return {coin:symbol,signal:"SAT",score:shortScore,entry:entryPrice,stop,tp1,tp2,rr,note:"Prev sweep + confirm + RSI"};
     }
     return null;
   }catch{ return null; }
 }
-function renderSignal(sig){ const body=document.querySelector("#signalBody"); if(!sig){ body.innerHTML=`<tr><td colspan="9" class="muted">Sinyal yok</td></tr>`; return; } body.innerHTML=`<tr><td><span class="sig ${sig.signal}">${sig.coin}</span></td><td><span class="sig ${sig.signal}">${sig.signal}</span></td><td class="${sig.score>=10?'ok':'warn'}">${sig.score.toFixed(1)}</td><td>${fmt(sig.entry)}</td><td>${fmt(sig.stop)}</td><td>${fmt(sig.tp1)}</td><td>${fmt(sig.tp2)}</td><td>${sig.rr.toFixed(2)}</td><td>${sig.note}</td></tr>`; }
-function renderDecision(sig, btcInfo){ const title=document.querySelector("#entryDecision"), reason=document.querySelector("#entryReason"); if(!sig){ title.innerHTML=`<span class="bad">GİRME</span>`; reason.innerText=btcInfo.bias==="MIX"?"BTC yönü MIX. Sistem bilinçli olarak işlem vermiyor.":"Önceki mum sweep yapıp sonraki mum onay vermedi."; document.querySelector("#decision").innerHTML=`<span class="bad">GİRME</span>`; return; } const canEnter=sig.score>=9.5&&sig.rr>=2.0&&btcInfo.bias!=="MIX"; if(canEnter){ title.innerHTML=`<span class="ok">GİR</span>`; reason.innerText=`${sig.coin} için ${sig.signal} sinyali onaylı. Giriş ${fmt(sig.entry)}, stop ${fmt(sig.stop)}, TP2 ${fmt(sig.tp2)}.`; document.querySelector("#decision").innerHTML=`<span class="ok">GİR</span>`; } else { title.innerHTML=`<span class="warn">BEKLE</span>`; reason.innerText=`Sinyal var ama giriş filtresi tam onay vermedi.`; document.querySelector("#decision").innerHTML=`<span class="warn">BEKLE</span>`; } }
-function renderSmartExit(sig){ const posState=document.querySelector("#posState"), afterTp1=document.querySelector("#afterTp1"), stopMgmt=document.querySelector("#stopMgmt"), weaknessExit=document.querySelector("#weaknessExit"), actionPlan=document.querySelector("#actionPlan"), exitDecision=document.querySelector("#exitDecision"), exitReason=document.querySelector("#exitReason"); if(!sig){ posState.innerText="-"; afterTp1.innerText="-"; stopMgmt.innerText="-"; weaknessExit.innerText="-"; actionPlan.innerText="-"; exitDecision.innerHTML=`<span class="bad">POZİSYON YOK</span>`; exitReason.innerText="Sinyal geldiğinde akıllı çıkış planı burada oluşur."; return; } posState.innerText=`${sig.signal} hazırlık`; afterTp1.innerText="Stop → Entry"; stopMgmt.innerText=`BE @ ${fmt(sig.entry)}`; weaknessExit.innerText=sig.signal==="AL"?"Zayıf kapanışta çık":"Ters güçlü kapanışta çık"; actionPlan.innerText="TP1 %50 / TP2 kalan"; exitDecision.innerHTML=`<span class="ok">AKILLI ÇIKIŞ AKTİF</span>`; exitReason.innerText=`Plan: TP1 görüldüğünde yarısını kapat, stop'u entry'ye çek. Güç kaybında TP2 beklemeden çık.`; }
-function alarm(sig){ if(!sig) return; const key=`${sig.coin}|${sig.signal}|${sig.score.toFixed(1)}|${fmt(sig.entry)}`; if(lastAlarmKey===key) return; lastAlarmKey=key; const banner=document.querySelector("#alarmBanner"); banner.style.display="block"; banner.innerText=`Yeni Pro V2 sinyal: ${sig.coin} ${sig.signal} | Giriş ${fmt(sig.entry)} | Stop ${fmt(sig.stop)} | TP2 ${fmt(sig.tp2)} | RR ${sig.rr.toFixed(2)}`; }
-async function scanAll(){ if(isScanning) return; isScanning=true; checkNewDay(); const total=parseInt(document.querySelector("#scanCount").value,10), entryTf=document.querySelector("#entryTf").value, trendTf=document.querySelector("#trendTf").value, htf=document.querySelector("#htf").value, minScore=parseFloat(document.querySelector("#minScore").value); updateStatus("Taranıyor..."); updateProgress(0,total); renderSignal(null); renderSmartExit(null); const btcInfo=await getBTCInfo(trendTf,htf); updateBTC(`${btcInfo.bias} | Mom ${btcInfo.momentum.toFixed(2)}%`); const symbols=await getSymbols(total), chunkSize=8, results=[]; let scanned=0; for(let i=0;i<symbols.length;i+=chunkSize){ const batch=symbols.slice(i,i+chunkSize); const out=await Promise.all(batch.map(s=>scanCoin(s,entryTf,trendTf,htf,minScore,btcInfo))); out.forEach(x=>{if(x) results.push(x)}); scanned+=batch.length; updateProgress(scanned,total); await sleep(120); } results.sort((a,b)=>b.score-a.score||b.rr-a.rr); const best=results[0]||null; renderSignal(best); renderDecision(best,btcInfo); renderSmartExit(best); if(best) saveDailySignal(best); renderDailySignals(); alarm(best); updateStatus("Hazır"); document.querySelector("#lastUpdate").innerText="Son güncelleme: "+new Date().toLocaleTimeString("tr-TR"); isScanning=false; }
-function resetTimer(){ if(timer) clearInterval(timer); const sec=parseInt(document.querySelector("#refreshSec").value,10); timer=setInterval(scanAll, sec*1000); }
-document.querySelector("#refreshSec").addEventListener("change", resetTimer);
-renderDailySignals();
-window.addEventListener("load",()=>{ setTimeout(()=>{ scanAll(); resetTimer(); },400); });
+
+function renderDecision(sig, btcInfo){
+  const title=document.querySelector("#entryDecision"), reason=document.querySelector("#entryReason");
+  if(!sig){
+    title.innerHTML='<span class="bad">GİRME</span>';
+    reason.innerText=btcInfo.bias==="MIX"?"BTC yönü MIX. Sistem bilinçli olarak işlem vermiyor.":"Önceki mum sweep yapıp sonraki mum onay vermedi veya RSI/ATR filtresi geçilmedi.";
+    document.querySelector("#decision").innerHTML='<span class="bad">GİRME</span>';
+    return;
+  }
+  const canEnter=sig.score>=9.5&&sig.rr>=2.0&&btcInfo.bias!=="MIX";
+  if(canEnter){
+    title.innerHTML='<span class="ok">GİR</span>';
+    reason.innerText=`${sig.coin} için ${sig.signal} sinyali onaylı. Entry ${fmt(sig.entry)}, stop ${fmt(sig.stop)}, TP1 ${fmt(sig.tp1)}, TP2 ${fmt(sig.tp2)}.`;
+    document.querySelector("#decision").innerHTML='<span class="ok">GİR</span>';
+  } else {
+    title.innerHTML='<span class="warn">BEKLE</span>';
+    reason.innerText='Sinyal var ama giriş filtresi tam onay vermedi.';
+    document.querySelector("#decision").innerHTML='<span class="warn">BEKLE</span>';
+  }
+}
+
+function renderSmartExit(trade){
+  const posState=document.querySelector("#posState"), afterTp1=document.querySelector("#afterTp1"), stopMgmt=document.querySelector("#stopMgmt"), weaknessExit=document.querySelector("#weaknessExit"), actionPlan=document.querySelector("#actionPlan"), exitDecision=document.querySelector("#exitDecision"), exitReason=document.querySelector("#exitReason");
+  if(!trade){
+    posState.innerText='-'; afterTp1.innerText='-'; stopMgmt.innerText='-'; weaknessExit.innerText='-'; actionPlan.innerText='-';
+    exitDecision.innerHTML='<span class="bad">POZİSYON YOK</span>';
+    exitReason.innerText='Sinyal kilitlenince burada Hybrid TP ve çıkış planı görünür.';
+    return;
+  }
+  posState.innerText=trade.state||`${trade.signal} aktif`;
+  afterTp1.innerText='%30 kapat';
+  stopMgmt.innerText=`TP1 sonrası BE @ ${fmt(trade.entry)}`;
+  weaknessExit.innerText=trade.signal==='AL'?'E20 altı zayıf kapanışta çık':'E20 üstü zayıf kapanışta çık';
+  actionPlan.innerText='TP1 %30 / TP2 %70';
+  exitDecision.innerHTML='<span class="ok">HYBRID TP AKTİF</span>';
+  exitReason.innerText='TP1 = 1R. TP1 görülünce stop entry’ye çekilir. Kalan kısım TP2 = 2.5R hedefler. Güç kaybında erken çık.';
+}
+
+function alarm(sig){ if(!sig) return; const key=`${sig.coin}|${sig.signal}|${sig.score.toFixed(1)}|${fmt(sig.entry)}`; if(lastAlarmKey===key) return; lastAlarmKey=key; const banner=document.querySelector("#alarmBanner"); banner.style.display='block'; banner.innerText=`Yeni V6 sinyal: ${sig.coin} ${sig.signal} | Entry ${fmt(sig.entry)} | Stop ${fmt(sig.stop)} | TP1 ${fmt(sig.tp1)} | TP2 ${fmt(sig.tp2)} | RR ${sig.rr.toFixed(2)}`; }
+
+function lockTrade(sig){
+  if(!sig) return;
+  const trade={...sig,state:'Açık',tp1Hit:false,createdAt:new Date().toLocaleTimeString('tr-TR')};
+  setActiveTrade(trade);
+  renderActiveTrade();
+  renderSmartExit(trade);
+}
+
+async function manageLockedTrade(){
+  const trade=getActiveTrade();
+  if(!trade) return false;
+  try{
+    const price=await getPrice(trade.coin);
+    let changed=false;
+    if(trade.signal==='AL'){
+      if(!trade.tp1Hit && price>=trade.tp1){ trade.tp1Hit=true; trade.stop=trade.entry; trade.state='TP1 görüldü'; changed=true; }
+      if(price>=trade.tp2){ trade.state='TP2 tamamlandı'; setActiveTrade(trade); renderActiveTrade(); renderSmartExit(trade); return true; }
+      if(price<=trade.stop){ trade.state=trade.tp1Hit?'BE/Stop':'Stop'; setActiveTrade(trade); renderActiveTrade(); renderSmartExit(trade); return true; }
+    } else {
+      if(!trade.tp1Hit && price<=trade.tp1){ trade.tp1Hit=true; trade.stop=trade.entry; trade.state='TP1 görüldü'; changed=true; }
+      if(price<=trade.tp2){ trade.state='TP2 tamamlandı'; setActiveTrade(trade); renderActiveTrade(); renderSmartExit(trade); return true; }
+      if(price>=trade.stop){ trade.state=trade.tp1Hit?'BE/Stop':'Stop'; setActiveTrade(trade); renderActiveTrade(); renderSmartExit(trade); return true; }
+    }
+    if(changed){ setActiveTrade(trade); renderActiveTrade(); renderSmartExit(trade); document.querySelector('#exitDecision').innerHTML='<span class="warn">TP1 SONRASI BE</span>'; }
+    return false;
+  }catch{ return false; }
+}
+
+async function scanAll(){
+  if(isScanning) return; isScanning=true; checkNewDay();
+  updateStatus('Taranıyor...');
+
+  const active=getActiveTrade();
+  if(active){
+    const finished=await manageLockedTrade();
+    if(finished){ clearActiveTrade(); document.querySelector('#lockState').innerHTML='<span class="bad">Kapalı</span>'; }
+  }
+
+  const locked=getActiveTrade();
+  if(locked){
+    renderActiveTrade();
+    renderDecision(locked,{bias:'LOCK',momentum:0});
+    renderSmartExit(locked);
+    updateStatus('Aktif trade kilitli');
+    document.querySelector('#lastUpdate').innerText='Son güncelleme: '+new Date().toLocaleTimeString('tr-TR');
+    isScanning=false;
+    return;
+  }
+
+  const total=parseInt(document.querySelector('#scanCount').value,10), entryTf=document.querySelector('#entryTf').value, trendTf=document.querySelector('#trendTf').value, htf=document.querySelector('#htf').value, minScore=parseFloat(document.querySelector('#minScore').value);
+  updateProgress(0,total); renderActiveTrade(); renderSmartExit(null);
+  const btcInfo=await getBTCInfo(trendTf,htf); updateBTC(`${btcInfo.bias} | Mom ${btcInfo.momentum.toFixed(2)}%`);
+  const symbols=await getSymbols(total), chunkSize=8, results=[]; let scanned=0;
+  for(let i=0;i<symbols.length;i+=chunkSize){ const batch=symbols.slice(i,i+chunkSize); const out=await Promise.all(batch.map(s=>scanCoin(s,entryTf,trendTf,htf,minScore,btcInfo))); out.forEach(x=>{if(x) results.push(x)}); scanned+=batch.length; updateProgress(scanned,total); await sleep(120); }
+  results.sort((a,b)=>b.score-a.score||b.rr-a.rr); const best=results[0]||null;
+  renderDecision(best,btcInfo);
+  if(best){ lockTrade(best); saveDailySignal(best); alarm(best); }
+  else { renderActiveTrade(); renderSmartExit(null); }
+  renderDailySignals();
+  updateStatus('Hazır'); document.querySelector('#lastUpdate').innerText='Son güncelleme: '+new Date().toLocaleTimeString('tr-TR'); isScanning=false;
+}
+
+function resetTimer(){ if(timer) clearInterval(timer); const sec=parseInt(document.querySelector('#refreshSec').value,10); timer=setInterval(scanAll,sec*1000); }
+
+document.querySelector('#refreshSec').addEventListener('change', resetTimer);
+renderDailySignals(); renderActiveTrade(); renderSmartExit(getActiveTrade());
+window.addEventListener('load',()=>{ setTimeout(()=>{ scanAll(); resetTimer(); },400); });
 </script>
 </body>
 </html>
